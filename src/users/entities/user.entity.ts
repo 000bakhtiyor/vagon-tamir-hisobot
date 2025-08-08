@@ -16,8 +16,11 @@ export class User {
     fullName?: string;
 
     @Column({ default: 'viewer' })
-    role: 'admin' | 'viewer';
+    role: 'admin' | 'viewer' | 'superadmin';
 
+    @Column({ nullable: true })
+    vchdId?: string;    
+    
     @Column({ nullable: true })
     refreshToken?: string;
 

@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { VchdService } from './vchds/vchds.service';
 import { LoggingInterceptor } from './logger';
 
 async function bootstrap() {
@@ -22,8 +21,6 @@ async function bootstrap() {
     credentials: true,
   });
 
-  const vchdService = app.get(VchdService);
-  await vchdService.seedInitialData();
   app.useGlobalInterceptors(new LoggingInterceptor());
 
   await app.listen(process.env.PORT ?? 3000);

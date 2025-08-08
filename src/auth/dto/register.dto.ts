@@ -15,4 +15,14 @@ export class RegisterDto {
     @IsString()
     @IsOptional()
     role?: string;
+
+    @ApiProperty({ required: false })
+    @IsString()
+    @IsOptional()
+    fullName?: string;
+
+    @ApiProperty({ required: false })
+    @IsString()
+    @IsOptional()
+    vchdId?: string;
 }

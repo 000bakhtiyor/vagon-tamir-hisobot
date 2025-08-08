@@ -7,6 +7,8 @@ import {
   Delete,
   Patch,
   UseGuards,
+  Req,
+  BadRequestException,
 } from '@nestjs/common';
 import { VagonsService } from './vagons.service';
 import { CreateVagonDto } from './dto/create-vagon.dto';
@@ -22,6 +24,7 @@ import { Vagon } from './entities/vagon.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
+import { User } from 'src/common/decorators/user.decorator';
 
 @ApiTags('Vagons')
 @ApiBearerAuth()
@@ -32,40 +35,36 @@ export class VagonsController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new vagon' })
-  @ApiResponse({ status: 201, type: Vagon })
-  @Roles('admin')
-  create(@Body() dto: CreateVagonDto) {
-    return this.vagonsService.create(dto);
+  @Roles('superadmin','admin')
+  create(@Body() dto: CreateVagonDto, @User('vchdId') vchdId: string, @User('role') role: string) {
+    return this.vagonsService.create(dto, vchdId, role);
   }
 
   @Get()
   @ApiOperation({ summary: 'Get all vagons' })
-  @ApiResponse({ status: 200, type: [Vagon] })
-  findAll() {
-    return this.vagonsService.findAll();
+  findAll(@User('vchdId') vchdId: string) {
+    return this.vagonsService.findAll(vchdId);
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get one vagon by ID' })
   @ApiParam({ name: 'id', type: String })
-  @ApiResponse({ status: 200, type: Vagon })
   findOne(@Param('id') id: string) {
     return this.vagonsService.findOne(id);
   }
 
   @Patch(':id')
-  @Roles('admin')
+  @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'Update a vagon by ID' })
   @ApiResponse({ status: 200, type: Vagon })
-  update(@Param('id') id: string, @Body() dto: UpdateVagonDto) {
-    return this.vagonsService.update(id, dto);
+  update(@Param('id') id: string, @Body() dto: UpdateVagonDto, @User('vchdId') vchdId:string, @User('role') role: string) {
+    return this.vagonsService.update(id, dto, vchdId, role);
   }
 
   @Delete(':id')
-  @Roles('admin')
+  @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'Delete a vagon by ID' })
-  @ApiResponse({ status: 204 })
-  remove(@Param('id') id: string) {
-    return this.vagonsService.remove(id);
+  remove(@Param('id') id: string, @User('vchdId') vchdId: string, @User('role') role: string) {
+    return this.vagonsService.remove(id, vchdId, role);
   }
 }

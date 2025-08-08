@@ -30,4 +30,18 @@ export class ResponseLoginDto {
         example: 'admin',
     })
     role: string;
+
+    @ApiProperty({
+        description: 'Optional full name of the user',
+        example: 'John Doe',
+        required: false,
+    })
+    fullName?: string;  
+    
+    @ApiProperty({
+        description: 'Optional VCHD ID associated with the user',
+        example: 'vchd12345',
+        required: false,
+    })
+    vchdId?: string;
 }

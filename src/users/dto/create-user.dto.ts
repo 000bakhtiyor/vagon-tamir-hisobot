@@ -18,6 +18,11 @@ export class CreateUserDto {
 
     @ApiPropertyOptional({ example: 'viewer', enum: ['admin', 'viewer'] })
     @IsOptional()
-    @IsIn(['admin', 'viewer'], { message: 'Role must be admin or viewer' })
-    role?: 'admin' | 'viewer';
+    @IsIn(['admin', 'viewer', 'superadmin'], { message: 'Role must be admin, superadmin or viewer' })
+    role: 'admin' | 'viewer' | 'superadmin';
+
+    @ApiPropertyOptional({ example: 'vchd12345' })
+    @IsOptional()
+    @IsString()
+    vchdId?: string;
 }

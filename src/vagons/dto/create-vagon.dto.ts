@@ -49,12 +49,4 @@ export class CreateVagonDto {
     @IsDateString()
     @IsOptional()
     timeTakenOut?: Date;
-
-    @ApiProperty({
-        example: '8a89c0ec-ff92-4f9e-8c62-dfbb18e0e641',
-        description: 'The ID of the VCHD this vagon belongs to',
-    })
-    @IsUUID()
-    @IsNotEmpty()
-    vchdId: string;
 }

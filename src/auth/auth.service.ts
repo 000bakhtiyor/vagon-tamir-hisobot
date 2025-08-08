@@ -16,8 +16,8 @@ export class AuthService {
     private readonly configService: ConfigService, 
   ){}
 
-  async generateTokens(userId: string, username: string, role: string): Promise<{ accessToken: string, refreshToken: string }> {
-    const payload = { sub: userId, username, role };
+  async generateTokens(userId: string, username: string, role: string, vchdId?: string): Promise<{ accessToken: string, refreshToken: string }> {
+    const payload = { sub: userId, username, role, vchdId };
 
     const accessToken = await this.jwtService.signAsync(payload, {
       secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
@@ -46,8 +46,7 @@ export class AuthService {
     if (!passwordValid) {
       throw new UnauthorizedException('Invalid username or password');
     }
-
-    const { accessToken, refreshToken } = await this.generateTokens(user.id, user.username, user.role);
+    const { accessToken, refreshToken } = await this.generateTokens(user.id, user.username, user.role, user.vchdId);
 
     await this.usersService.updateRefreshToken(user.id, await this.hashRefreshToken(refreshToken));
 
@@ -57,6 +56,8 @@ export class AuthService {
       userId: user.id,
       username: user.username,
       role: user.role,
+      fullName: user.fullName,
+      vchdId: user.vchdId,
     };
   }
 
@@ -70,10 +71,13 @@ export class AuthService {
     const newUser = await this.usersService.create({
       ...registerDto,
       password: hashedPassword,
-      role: registerDto.role as 'admin' | 'viewer' // keyinro o'zgartirish kk
+      role: registerDto.role as 'admin' | 'viewer' | 'superadmin',
     });
 
-    const { accessToken, refreshToken } = await this.generateTokens(newUser.id, newUser.username, newUser.role);
+    if(!newUser.vchdId){
+      throw new NotFoundException('VCHD ID not found for this user');
+    }
+    const { accessToken, refreshToken } = await this.generateTokens(newUser.id, newUser.username, newUser.role, newUser.vchdId);
 
     await this.usersService.updateRefreshToken(newUser.id, await this.hashRefreshToken(refreshToken));
 
@@ -83,6 +87,8 @@ export class AuthService {
       userId: newUser.id,
       username: newUser.username,
       role: newUser.role,
+      fullName: newUser.fullName,
+      vchdId: newUser.vchdId,
     };
   }
 
@@ -98,8 +104,10 @@ export class AuthService {
 
       const isMatch = await bcrypt.compare(refreshToken, user.refreshToken);
       if (!isMatch) throw new ForbiddenException('Invalid refresh token');
-
-      const tokens = await this.generateTokens(user.id, user.username, user.role);
+      if(!user.vchdId){
+        throw new NotFoundException('VCHD ID not found for this user');
+      } 
+      const tokens = await this.generateTokens(user.id, user.username, user.role, user.vchdId);
       await this.usersService.updateRefreshToken(user.id, await this.hashRefreshToken(tokens.refreshToken));
 
       return {
@@ -115,6 +123,9 @@ export class AuthService {
   }
 
   async logout(userId: string): Promise<void> {
+    if (!userId || userId.trim() === '' || userId === 'undefined') {
+      throw new UnauthorizedException('User ID is required for logout');
+    }
     await this.usersService.updateRefreshToken(userId, ""); 
   }
 
