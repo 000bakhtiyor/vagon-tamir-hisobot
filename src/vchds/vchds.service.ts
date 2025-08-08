@@ -6,6 +6,7 @@ import { CreateVchdDto, VchdNameDto } from './dto/create-vchd.dto';
 import * as dayjs from 'dayjs';
 import { GetTakenOutStatsResponse } from './interfaces/reponse-takenOut.interface';
 import { TakenOutStats } from './interfaces/taken-out.interface';
+import { UpdateVchdDto } from './dto/update-vchd.dto';
 
 @Injectable()
 export class VchdService {
@@ -14,20 +15,61 @@ export class VchdService {
     private readonly vchdRepository: Repository<Vchd>,
   ) { }
 
-  private formatDate(date: Date, format: string): string {
-    const d = new Date(date);
-    const iso = d.toISOString();
-    if (format === 'YYYY-MM-DD') return iso.slice(0, 10);
-    if (format === 'YYYY-MM') return iso.slice(0, 7);
-    if (format === 'YYYY') return iso.slice(0, 4);
-    return iso;
-  }
+  // private formatDate(date: Date, format: string): string {
+  //   const d = new Date(date);
+  //   const iso = d.toISOString();
+  //   if (format === 'YYYY-MM-DD') return iso.slice(0, 10);
+  //   if (format === 'YYYY-MM') return iso.slice(0, 7);
+  //   if (format === 'YYYY') return iso.slice(0, 4);
+  //   return iso;
+  // }
 
   async create(dto: CreateVchdDto): Promise<Vchd> {
+    const { uz, ru, eng, krill } = dto.name;
+
+    const existing = await this.vchdRepository.findOne({
+      where: [
+        { uz },
+        { ru },
+        { eng },
+        { krill },
+      ],
+    });
+
+    if (existing) {
+      throw new BadRequestException('VCHD with this name already exists in one of the languages.');
+    }
+
     const vchd = this.vchdRepository.create(dto.name);
     return this.vchdRepository.save(vchd);
   }
 
+  async remove(id: string): Promise<{message: string}> {
+    const vchd = await this.vchdRepository.findOne({ where: { id } });
+    if (!vchd) {
+      throw new NotFoundException(`VCHD with ID ${id} not found.`);
+    }
+    if (vchd.vagons.length > 0) {
+      throw new BadRequestException('Cannot delete VCHD with associated wagons.');
+    }
+    await this.vchdRepository.remove(vchd);
+
+    return {
+      message: `VCHD with ID ${id} has been successfully deleted.`,
+    }
+  }
+
+
+  async update(id: string, dto: UpdateVchdDto): Promise<Vchd> {
+    const vchd = await this.vchdRepository.findOne({ where: { id } });
+
+    if (!vchd) {
+      throw new NotFoundException(`VCHD with ID ${id} not found`);
+    }
+
+    Object.assign(vchd, dto.name);
+    return this.vchdRepository.save(vchd);
+  }
 async getTakenOutStats(
   page = 1,
   limit = 10,

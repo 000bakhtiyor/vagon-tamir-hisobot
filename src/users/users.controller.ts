@@ -17,6 +17,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { string } from 'joi';
+import { UserDecorator } from 'src/common/decorators/user.decorator';
 
 @ApiTags('Users')
 @ApiBearerAuth()
@@ -24,6 +25,14 @@ import { string } from 'joi';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
+
+  @Get('me')
+  @Roles('superadmin', 'admin', 'viewer')
+  @ApiOperation({ summary: 'Get current user information' })
+  @ApiResponse({ status: 200, type: User })
+  async getCurrentUser(@UserDecorator('userId') userId: string): Promise<User> {
+    return this.usersService.findOne(userId);
+  }
 
   @Post()
   @Roles('superadmin')

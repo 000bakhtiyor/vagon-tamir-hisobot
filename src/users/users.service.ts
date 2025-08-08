@@ -14,6 +14,9 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
+    if (createUserDto.role === 'superadmin' && createUserDto.vchdId) {
+      throw new ConflictException('Superadmin not allowed to have a VCHD ID.');
+    }
     const { username, vchdId } = createUserDto;
     if(!username){
       throw new ConflictException('Username is required.');

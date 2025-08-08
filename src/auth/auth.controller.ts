@@ -8,7 +8,7 @@ import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { Roles } from './roles.decorator';
 import { RolesGuard } from './roles.guard';
-import { User } from 'src/common/decorators/user.decorator';
+import { UserDecorator } from 'src/common/decorators/user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -39,11 +39,11 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('superadmin')
+  @Roles('superadmin', 'admin', 'viewer')
   @Post('logout')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Logout and remove refresh token' })
-  async logout(@User("userId") userId: string): Promise<{message: string}> {
+  async logout(@UserDecorator("userId") userId: string): Promise<{message: string}> {
     await this.authService.logout(userId);
     return { message: 'Logged out successfully' };
   }

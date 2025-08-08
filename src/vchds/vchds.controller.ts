@@ -9,6 +9,8 @@ import {
   BadRequestException,
   Req,
   ForbiddenException,
+  Delete,
+  Patch,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -25,7 +27,8 @@ import { Vchd } from './entities/vchd.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
-import { User } from 'src/common/decorators/user.decorator';
+import { UserDecorator } from 'src/common/decorators/user.decorator';
+import { UpdateVchdDto } from './dto/update-vchd.dto';
 
 @ApiTags('VCHDs')
 @ApiBearerAuth()
@@ -57,6 +60,22 @@ export class VchdController {
     return this.vchdService.create(createVchdDto);
   }
 
+  @Delete(':id')
+  @Roles('superadmin')
+  @ApiOperation({ summary: 'Delete a VCHD by ID' })
+  async remove(@Param('id') id: string): Promise<{ message:string }> {
+    return this.vchdService.remove(id);
+  } 
+
+  @Patch(':id')
+  @ApiOperation({ summary: 'Update a VCHD by ID' })
+  async update(
+    @Param('id') id: string,
+    @Body() dto: UpdateVchdDto,
+  ) {
+    return this.vchdService.update(id, dto);
+  }
+
   @Get()
   @Roles('superadmin', 'viewer', 'admin')
   @ApiOperation({ summary: 'Get all VCHDs with pagination and filters' })
@@ -71,7 +90,7 @@ export class VchdController {
     @Query('name') name?: string,
     @Query('sortBy') sortBy?: 'vchd.id' | 'vchd.uz',
     @Query('order') order?: 'ASC' | 'DESC',
-    @User('vchdId') vchdId?: string,
+    @UserDecorator('vchdId') vchdId?: string,
   ): Promise<Vchd[]> {
     return this.vchdService.findAll(page, limit, name, sortBy, order, vchdId);
   }
@@ -96,8 +115,8 @@ export class VchdController {
     @Query('limit') limit: number,
     @Query('date') selectedDate: Date,
     @Query('type') type: 'day' | 'month' | 'year',
-    @User('vchdId') vchdId: string,
-    @User('role') role: string
+    @UserDecorator('vchdId') vchdId: string,
+    @UserDecorator('role') role: string
   ) {
     const date = new Date(selectedDate);
     if (isNaN(date.getTime())) {
@@ -122,7 +141,7 @@ export class VchdController {
     @Query('limit') limit: number,
     @Query('date') selectedDate: Date,
     @Query('type') type: 'day' | 'month' | 'year',
-    @User('vchdId') vchdId: string,
+    @UserDecorator('vchdId') vchdId: string,
   ) {
     const date = new Date(selectedDate);
     if (isNaN(date.getTime())) {
@@ -135,7 +154,7 @@ export class VchdController {
   @Get(':id')
   @Roles('superadmin', 'admin')
   @ApiOperation({ summary: 'Get a single VCHD by ID' })
-  findOne(@Param('id') id: string, @User('vchdId') vchdId: string, @User('role') role: string): Promise<Vchd> {
+  findOne(@Param('id') id: string, @UserDecorator('vchdId') vchdId: string, @UserDecorator('role') role: string): Promise<Vchd> {
     return this.vchdService.findOne(id, vchdId, role);
   }
 }
