@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { VchdsModule } from './vchds/vchds.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { VagonsModule } from './vagons/vagons.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ReleasedVagonsModule } from './released-vagons/released-vagons.module';
+import { WagonDepotsModule } from './wagon-depots/wagon-depots.module';
+import { StationsModule } from './stations/stations.module';
+import { RepairClassificationsModule } from './repair-classifications/repair-classifications.module';
+import { OwnershipsModule } from './ownerships/ownerships.module';
 
 @Module({
   imports: [
@@ -28,8 +31,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
     AuthModule,
     UsersModule,
-    VchdsModule,
-    VagonsModule,
+    ReleasedVagonsModule,
+    WagonDepotsModule,
+    StationsModule,
+    RepairClassificationsModule,
+    OwnershipsModule,
   ],
   controllers: [],
   providers: [],

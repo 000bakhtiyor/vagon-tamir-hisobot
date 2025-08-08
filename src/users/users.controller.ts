@@ -27,29 +27,24 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Get('me')
-  @Roles('superadmin', 'admin', 'viewer')
   @ApiOperation({ summary: 'Get current user information' })
-  @ApiResponse({ status: 200, type: User })
   async getCurrentUser(@UserDecorator('userId') userId: string): Promise<User> {
     return this.usersService.findOne(userId);
   }
 
   @Post()
-  @Roles('superadmin')
   @ApiOperation({ summary: 'Create new user' })
   async create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
   @Get()
-  @Roles('superadmin')
   @ApiOperation({ summary: 'Get all users' })
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
-  @Roles('superadmin')
   @ApiOperation({ summary: 'Get user by ID' })
   @ApiParam({ name: 'id', type: string })
   findOne(@Param('id') id: string) {
@@ -57,7 +52,6 @@ export class UsersController {
   }
 
   @Patch(':id')
-  @Roles('superadmin')
   @ApiOperation({ summary: 'Update user by ID' })
   @ApiParam({ name: 'id', type: string })
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
@@ -65,8 +59,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  @Roles('superadmin')
-  @ApiOperation({ summary: 'Delete user by ID' })
+  @ApiOperation({summary: 'Delete user by ID'})
   @ApiParam({ name: 'id', type: string })
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
