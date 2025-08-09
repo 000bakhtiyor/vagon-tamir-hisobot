@@ -1,5 +1,6 @@
-import { WagonRepairType } from "src/common/enums/repair.type";
-import { VagonOwnerType } from "src/common/enums/wagon.type";
+import { LoadStatus } from "src/common/enums/load-status.enum";
+import { WagonRepairType } from "src/common/enums/repair-type.enum";
+import { VagonOwnerType } from "src/common/enums/wagon-type.enum";
 import { Ownership } from "src/ownerships/entities/ownership.entity";
 import { RepairClassification } from "src/repair-classifications/entities/repair-classification.entity";
 import { Station } from "src/stations/entities/station.entity";
@@ -10,16 +11,16 @@ export class ReleasedVagon {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({nullable: false})
+    @Column({ nullable: false })
     vagonNumber: number;
 
-    @Column({ nullable: false})
+    @Column({ nullable: false })
     vagonCode: string;
 
-    @Column({type: 'date', nullable: false})
+    @Column({ type: 'date', nullable: false })
     releaseDate: Date;
 
-    @ManyToOne(()=> Ownership, (ownership) => ownership.releasedVagons)
+    @ManyToOne(() => Ownership, (ownership) => ownership.releasedVagons)
     @JoinColumn({ name: 'ownershipId' })
     ownership: Ownership;
 
@@ -35,7 +36,7 @@ export class ReleasedVagon {
     })
     ownerType: VagonOwnerType;
 
-    @ManyToOne(()=> Station, (station) => station.releasedVagons)
+    @ManyToOne(() => Station, (station) => station.releasedVagons)
     @JoinColumn({ name: 'stationId' })
     station: Station;
 
@@ -46,4 +47,14 @@ export class ReleasedVagon {
         nullable: false,
     })
     repairType: WagonRepairType;
+
+    @Column({ default: false })
+    transitPermit: boolean
+
+    @Column({
+        type: 'enum',
+        enum: LoadStatus,
+        default: LoadStatus.UNLOADED,
+    })
+    loadStatus: LoadStatus;
 }
