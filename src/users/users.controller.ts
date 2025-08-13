@@ -14,12 +14,13 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { Roles } from 'src/auth/roles.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { string } from 'joi';
 import { UserDecorator } from 'src/common/decorators/user.decorator';
+import { Roles } from 'src/auth/roles.decorator';
+import { RolesEnum } from 'src/common/enums/role.enum';
 
-@ApiTags('Users')
+@ApiTags('Users [SUPERADMIN, 1 All]')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('users')
@@ -27,24 +28,28 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Get('me')
-  @ApiOperation({ summary: 'Get current user information' })
+  @Roles(RolesEnum.VIEWER, RolesEnum.MODERATOR, RolesEnum.SUPERADMIN)
+  @ApiOperation({ summary: 'Get current user information [All]' })
   async getCurrentUser(@UserDecorator('userId') userId: string): Promise<User> {
     return this.usersService.findOne(userId);
   }
 
   @Post()
+  @Roles(RolesEnum.SUPERADMIN)
   @ApiOperation({ summary: 'Create new user' })
   async create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
   @Get()
+  @Roles(RolesEnum.SUPERADMIN)
   @ApiOperation({ summary: 'Get all users' })
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
+  @Roles(RolesEnum.SUPERADMIN)
   @ApiOperation({ summary: 'Get user by ID' })
   @ApiParam({ name: 'id', type: string })
   findOne(@Param('id') id: string) {
@@ -52,6 +57,7 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @Roles(RolesEnum.SUPERADMIN)
   @ApiOperation({ summary: 'Update user by ID' })
   @ApiParam({ name: 'id', type: string })
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
@@ -59,7 +65,8 @@ export class UsersController {
   }
 
   @Delete(':id')
-  @ApiOperation({summary: 'Delete user by ID'})
+  @Roles(RolesEnum.SUPERADMIN)
+  @ApiOperation({ summary: 'Delete user by ID' })
   @ApiParam({ name: 'id', type: string })
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);

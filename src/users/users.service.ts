@@ -14,28 +14,6 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    if (createUserDto.role === 'superadmin' && createUserDto.vchdId) {
-      throw new ConflictException('Superadmin not allowed to have a VCHD ID.');
-    }
-    const { username, vchdId } = createUserDto;
-    if(!username){
-      throw new ConflictException('Username is required.');
-    }
-
-    // Agar username bazada mavjud bo'lsa, xatolik qaytarish
-    const existingUser = await this.userRepository.findOne({ where: { username } });
-    if (existingUser) {
-      throw new ConflictException(`Username "${username}" is already taken.`);
-    }
-
-    // Agar userda vchdId berilgan bo'lsa, bu id boshqa userga berilganligini tekshirish
-    // Agar vchdId berilmagan bo'lsa, uni tekshirish shart emas
-    if (vchdId!== null && vchdId !== undefined) {
-      const existingVchdUser = await this.userRepository.findOne({ where: { vchdId } });
-      if (existingVchdUser) {
-        throw new ConflictException(`VCHD ID "${vchdId}" is already associated with another user.`);
-      } 
-    }
 
     const newUser = this.userRepository.create(createUserDto);
     return this.userRepository.save(newUser);
@@ -55,17 +33,6 @@ export class UsersService {
 
     return user;
   }
-
-  // Controllersiz ishlatish uchun
-  async findByUsername(username: string): Promise<User> {
-
-    const user = await this.userRepository.findOne({ where: { username } });
-    if(!user) {
-      throw new NotFoundException(`User with username "${username}" not found.`);
-    }
-    return user
-  }
-
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.userRepository.findOne({ where: { id } });

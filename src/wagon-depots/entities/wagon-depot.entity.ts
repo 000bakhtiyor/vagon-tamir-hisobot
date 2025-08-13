@@ -1,5 +1,6 @@
 import { Station } from "src/stations/entities/station.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "src/users/entities/user.entity";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('wagon_depots')
 export class WagonDepot {
@@ -9,6 +10,10 @@ export class WagonDepot {
 
     @Column({ nullable: false })
     name: string;
+
+    @ManyToMany(()=> User, (user) => user.depots)
+    @JoinTable()
+    admins: User[]
 
     @OneToMany(() => Station, (station) => station.wagonDepot)
     stations: Station[];

@@ -1,6 +1,7 @@
 import { ReleasedVagon } from "src/released-vagons/entities/released-vagon.entity";
-import { Column, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity('ownerships')
 export class Ownership {
 
     @PrimaryGeneratedColumn('uuid')

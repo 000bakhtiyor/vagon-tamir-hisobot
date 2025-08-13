@@ -7,17 +7,27 @@ import { ResponseLoginDto } from './dto/response-login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { use } from 'passport';
 import { ConfigService } from '@nestjs/config';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/users/entities/user.entity';
+import { Repository } from 'typeorm';
+import { WagonDepot } from 'src/wagon-depots/entities/wagon-depot.entity';
+import { RolesEnum } from 'src/common/enums/role.enum';
+import { Roles } from './roles.decorator';
 @Injectable()
 export class AuthService {
   
   constructor(
     private readonly usersService: UsersService,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+    @InjectRepository(WagonDepot)
+    private readonly depoRepository: Repository<WagonDepot>,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService, 
   ){}
 
-  async generateTokens(userId: string, username: string, role: string, vchdId?: string): Promise<{ accessToken: string, refreshToken: string }> {
-    const payload = { sub: userId, username, role, vchdId };
+  async generateTokens(userId: string, username: string, role: string, depoId: string): Promise<{ accessToken: string, refreshToken: string }> {
+    const payload = { sub: userId, username, role, depoId };
 
     const accessToken = await this.jwtService.signAsync(payload, {
       secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
@@ -37,7 +47,7 @@ export class AuthService {
   }
 
   async login(loginDto: LoginDto): Promise<ResponseLoginDto> {
-    const user = await this.usersService.findByUsername(loginDto.username);
+    const user = await this.userRepository.findOneBy({ username: loginDto.username });
     if (!user) {
       throw new UnauthorizedException('Invalid username or password');
     }
@@ -46,7 +56,17 @@ export class AuthService {
     if (!passwordValid) {
       throw new UnauthorizedException('Invalid username or password');
     }
-    const { accessToken, refreshToken } = await this.generateTokens(user.id, user.username, user.role, user.vchdId);
+
+    let usersDepo: any;
+    if(user.role === RolesEnum.MODERATOR){
+      usersDepo = await this.depoRepository.findOneBy({
+        admins: { id: user.id }
+      })
+      if (!usersDepo) {
+        throw new UnauthorizedException('Depo not found with given user id');
+      }
+    }
+    const { accessToken, refreshToken } = await this.generateTokens(user.id, user.username, user.role, usersDepo?.id || null);
 
     await this.usersService.updateRefreshToken(user.id, await this.hashRefreshToken(refreshToken));
 
@@ -57,12 +77,12 @@ export class AuthService {
       username: user.username,
       role: user.role,
       fullName: user.fullName,
-      vchdId: user.vchdId,
+      depoId: usersDepo?.id || null
     };
   }
 
   async register(registerDto: RegisterDto): Promise<ResponseLoginDto> {
-    const existingUser = await this.usersService.findByUsername(registerDto.username);
+    const existingUser = await this.userRepository.findOneBy({ username: registerDto.username })
     if (existingUser) {
       throw new UnauthorizedException(`Username "${registerDto.username}" is already taken.`);
     }
@@ -71,13 +91,27 @@ export class AuthService {
     const newUser = await this.usersService.create({
       ...registerDto,
       password: hashedPassword,
-      role: registerDto.role as 'admin' | 'viewer' | 'superadmin',
+      role: registerDto.role as RolesEnum,
     });
 
-    if(!newUser.vchdId){
-      throw new NotFoundException('VCHD ID not found for this user');
+    let usersDepo: any;
+
+    if (registerDto.role === RolesEnum.MODERATOR) {
+      usersDepo = await this.depoRepository.findOne({
+        where: { id: registerDto.depoId },
+        relations: ['admins'], 
+      });
+
+      if (!usersDepo) {
+        throw new UnauthorizedException('Depo not found with given user id');
+      }
+
+      usersDepo.admins = [...(usersDepo.admins || []), newUser];
+
+      await this.depoRepository.save(usersDepo);
     }
-    const { accessToken, refreshToken } = await this.generateTokens(newUser.id, newUser.username, newUser.role, newUser.vchdId);
+
+    const { accessToken, refreshToken } = await this.generateTokens(newUser.id, newUser.username, newUser.role, usersDepo?.id || null);
 
     await this.usersService.updateRefreshToken(newUser.id, await this.hashRefreshToken(refreshToken));
 
@@ -88,7 +122,7 @@ export class AuthService {
       username: newUser.username,
       role: newUser.role,
       fullName: newUser.fullName,
-      vchdId: newUser.vchdId,
+      depoId: usersDepo?.id || null
     };
   }
 
@@ -104,10 +138,14 @@ export class AuthService {
 
       const isMatch = await bcrypt.compare(refreshToken, user.refreshToken);
       if (!isMatch) throw new ForbiddenException('Invalid refresh token');
-      if(!user.vchdId){
-        throw new NotFoundException('VCHD ID not found for this user');
-      } 
-      const tokens = await this.generateTokens(user.id, user.username, user.role, user.vchdId);
+
+      const usersDepo = await this.depoRepository.findOneBy({
+        admins: { id: user.id }
+      })
+      if (!usersDepo) {
+        throw new UnauthorizedException('Depo not found with given user id');
+      }
+      const tokens = await this.generateTokens(user.id, user.username, user.role, usersDepo.id);
       await this.usersService.updateRefreshToken(user.id, await this.hashRefreshToken(tokens.refreshToken));
 
       return {
@@ -116,6 +154,7 @@ export class AuthService {
         userId: user.id,
         username: user.username,
         role: user.role,
+        depoId: usersDepo.id
       };
     } catch (e) {
       throw new UnauthorizedException('Token expired or invalid');

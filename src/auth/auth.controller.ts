@@ -21,10 +21,7 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('superadmin')
   @Post('register')
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Register new user' })
   async register(@Body() registerDto: RegisterDto): Promise<ResponseLoginDto> {
     return this.authService.register(registerDto);
@@ -39,7 +36,6 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('superadmin', 'admin', 'viewer')
   @Post('logout')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Logout and remove refresh token' })

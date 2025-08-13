@@ -24,5 +24,5 @@ export class RegisterDto {
     @ApiProperty({ required: false })
     @IsString()
     @IsOptional()
-    vchdId?: string;
+    depoId?: string;
 }

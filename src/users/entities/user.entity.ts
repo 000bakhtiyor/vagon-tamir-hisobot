@@ -1,5 +1,7 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { WagonDepot } from 'src/wagon-depots/entities/wagon-depot.entity';
+import { RolesEnum } from 'src/common/enums/role.enum';
 
 @Entity()
 export class User {
@@ -15,14 +17,18 @@ export class User {
     @Column({ nullable: true, length: 100 })
     fullName?: string;
 
-    @Column({ default: 'viewer' })
-    role: 'admin' | 'viewer' | 'superadmin';
-
-    @Column({ nullable: true })
-    vchdId?: string;    
+    @Column({ 
+        type: 'enum',
+        enum: RolesEnum,
+        default: RolesEnum.VIEWER
+     })
+    role: RolesEnum;
     
     @Column({ nullable: true })
     refreshToken?: string;
+
+    @ManyToMany(() => WagonDepot, (depot) => depot.admins)
+    depots: WagonDepot[];
 
     @BeforeInsert()
     async hashPassword() {

@@ -1,0 +1,1642 @@
+{
+  "data": [
+    {
+      "code": 100,
+      "classification_code": 1,
+      "short_desc": "ДИАГ.КОЛ.ПАР",
+      "text": "ДИАГНОСТИРОВАНИЕ КОЛЕСНЫХ ПАР"
+    },
+    {
+      "code": 101,
+      "classification_code": 3,
+      "short_desc": "CXOД C PEЛЬC",
+      "text": "НЕИСПР.ВАГ.В РЕЗ.СХОДА С РЕЛЬС"
+    },
+    {
+      "code": 102,
+      "classification_code": 2,
+      "short_desc": "ТОНK.ГPEБEHЬ",
+      "text": "TOHKИЙ ГPEБEHЬ"
+    },
+    {
+      "code": 103,
+      "classification_code": 2,
+      "short_desc": "ПPK. ПO KP.KT.",
+      "text": "ПPOKAT ПO KPУГУ KAT.BЫШE HOPMЫ"
+    },
+    {
+      "code": 104,
+      "classification_code": 2,
+      "short_desc": "KOЛ.BЫP.ПBKT.",
+      "text": "KOЛЬЦEBЫE BЫPAБOTKИ ПOBEP.KAT."
+    },
+    {
+      "code": 105,
+      "classification_code": 2,
+      "short_desc": "HAB.HA ПB. KT",
+      "text": "HABAP HA ПOBEPXHOCTИ KATAHИЯ"
+    },
+    {
+      "code": 106,
+      "classification_code": 2,
+      "short_desc": "ПЛЗ.HA ПB. KT",
+      "text": "ПOЛЗУH HA ПOBEPXHOCTИ KATAHИЯ"
+    },
+    {
+      "code": 107,
+      "classification_code": 2,
+      "short_desc": "BЫШ. OБOД. KOЛ",
+      "text": "BЫЩEPБИHЫ OБOДA KOЛECA"
+    },
+    {
+      "code": 108,
+      "classification_code": 2,
+      "short_desc": "PЗД. OБOДA KЛ",
+      "text": "PAЗДABЛИBAHИE OБOДA KOЛECA"
+    },
+    {
+      "code": 109,
+      "classification_code": 2,
+      "short_desc": "OCTP.HAKT. ГP",
+      "text": "OCTPOKOHEЧHЫЙ HAKAT ГPEБHЯ"
+    },
+    {
+      "code": 110,
+      "classification_code": 2,
+      "short_desc": "BEPT. ПOДP. ГP",
+      "text": "BEPTИKAЛЬHЫЙ ПOДPEЗ ГPEБHЯ"
+    },
+    {
+      "code": 111,
+      "classification_code": 2,
+      "short_desc": "TOHKИЙ OБOД",
+      "text": "TOHKИЙ OБOД"
+    },
+    {
+      "code": 112,
+      "classification_code": 1,
+      "short_desc": "TPEЩИH. OБOДA",
+      "text": "TPEЩEHЫ OБOДA"
+    },
+    {
+      "code": 113,
+      "classification_code": 1,
+      "short_desc": "OCЛ.CT. HA OC",
+      "text": "OCЛAБЛEHИE CTУПИЦЫ HA OCИ"
+    },
+    {
+      "code": 114,
+      "classification_code": 1,
+      "short_desc": "ТРЕЩИН.ГРЕБ.",
+      "text": "ТРЕЩИНА ГРЕБНЯ.ОТКОЛ ГРЕБНЯ"
+    },
+    {
+      "code": 115,
+      "classification_code": 1,
+      "short_desc": "ОТК.ОБОДА",
+      "text": "ОТКОЛ ОБОДА КОЛЕСА"
+    },
+    {
+      "code": 116,
+      "classification_code": 3,
+      "short_desc": "ПОЛЗУН П.КАТ.",
+      "text": "ПОЛЗУН НА ПОВ.КАТ.1 КОЛЕСЕ"
+    },
+    {
+      "code": 117,
+      "classification_code": 2,
+      "short_desc": "НРВ.ПРК.К.КТ",
+      "text": "НЕРАВНОМЕР.ПРОКАТ ПО КР.КАТ."
+    },
+    {
+      "code": 118,
+      "classification_code": 1,
+      "short_desc": "ТРЩ.Д.КЛ.КП.",
+      "text": "ТРЕЩИНА ДИСКА КОЛЕСА КОЛПАРЫ"
+    },
+    {
+      "code": 119,
+      "classification_code": 1,
+      "short_desc": "ВЫБР.СМЗ.БКС",
+      "text": "ВЫБРОС СМАЗКИ ИЗ БУКС.УЗЛА"
+    },
+    {
+      "code": 120,
+      "classification_code": 1,
+      "short_desc": "ТРЩ.КАС.ПДШП",
+      "text": "ТРЕЩ.НАР.КОЛ.ПДШП КАСС.ТИПА"
+    },
+    {
+      "code": 121,
+      "classification_code": 1,
+      "short_desc": "НРШ.УПЛ.ПДШП",
+      "text": "НАРУШ.УПЛОТ.КОЖ.ПДШТ КАСС.ТИПА"
+    },
+    {
+      "code": 122,
+      "classification_code": 1,
+      "short_desc": "ОТС.БЛТ.КР",
+      "text": "ОТС/ОБР/ОСЛ БОЛТОВТОРЦ.КР.ПДШП"
+    },
+    {
+      "code": 130,
+      "classification_code": 1,
+      "short_desc": "ТРЩ.ОС.КП",
+      "text": "ТРЕЩИНА ОСИ КОЛПАРЫ"
+    },
+    {
+      "code": 132,
+      "classification_code": 2,
+      "short_desc": "ПPT.MC. OC.",
+      "text": "ПPOTEPTЫE MECTA OCИ KOЛПAPЫ"
+    },
+    {
+      "code": 133,
+      "classification_code": 3,
+      "short_desc": "CЛ. KOHT. ЭЛEK",
+      "text": "CЛEДЫ KOHTAKTA C ЭЛEKTP.HA OCИ"
+    },
+    {
+      "code": 134,
+      "classification_code": 1,
+      "short_desc": "ХОЛОД.ИЗЛОМ",
+      "text": "ХОЛОДНЫЙ ИЗЛОМ ШЕЙКИ ОСИ"
+    },
+    {
+      "code": 148,
+      "classification_code": 3,
+      "short_desc": "ПОВРЕЖ.ОС.КП.",
+      "text": "ПОВРЕЖДЕНИЯ ОСИ КОЛ.ПАРЫ"
+    },
+    {
+      "code": 150,
+      "classification_code": 1,
+      "short_desc": "НГР.ПДШП.БКС",
+      "text": "НАГРЕВ ПДШП ПО ВНЕШНИМ ПРИЗН."
+    },
+    {
+      "code": 151,
+      "classification_code": 1,
+      "short_desc": "CДBИГ БYKCЫ",
+      "text": "CДBИГ БУKCЫ"
+    },
+    {
+      "code": 152,
+      "classification_code": 3,
+      "short_desc": "TPEШ. ИЗЛ. БYK",
+      "text": "TPEЩEHЫ ИЛИ ИЗЛOM KOPПУCA БУKC"
+    },
+    {
+      "code": 153,
+      "classification_code": 3,
+      "short_desc": "ИЗЛ.ИЗГ. БYKC",
+      "text": "ИЗЛOM ИЛИ ИЗГИБ KPЫШKИ БУKCЫ"
+    },
+    {
+      "code": 154,
+      "classification_code": 1,
+      "short_desc": "ОСЛ.БЛТ.БКС.",
+      "text": "ОСЛАБ.БОЛТА.КРЕП.КРЫШКИ БУКСЫ"
+    },
+    {
+      "code": 155,
+      "classification_code": 3,
+      "short_desc": "ПРВ.РЛ.БКС.",
+      "text": "ПЕРЕВЕРНУТА РОЛИКОВАЯ БУКСА"
+    },
+    {
+      "code": 156,
+      "classification_code": 2,
+      "short_desc": "CCT.АКСТ.КНТ",
+      "text": "ПОКАЗ.СИСТ.АКУСТ.КОНТР.БУКС.УЗ"
+    },
+    {
+      "code": 157,
+      "classification_code": 1,
+      "short_desc": "НГР.ПДШ.АВТК",
+      "text": "НАГРЕВ ПДШП ВЫШЕ НОРМЫ АВТК."
+    },
+    {
+      "code": 158,
+      "classification_code": 2,
+      "short_desc": "НСВМ.БУКС",
+      "text": "НАЛ.НЕСВМ.БУК.УЗ.К.ПАР.ПОД 1 В"
+    },
+    {
+      "code": 159,
+      "classification_code": 1,
+      "short_desc": "НРШ/ОСЛ ТРЦ",
+      "text": "НАР/ОСЛ ТОРЦЕВОГО КРПДШБКС"
+    },
+    {
+      "code": 160,
+      "classification_code": 2,
+      "short_desc": "ПСЧ.СР.КП",
+      "text": "ПРОСР.СРОК СРЕД.РЕМ.КОЛ.ПАРЫ"
+    },
+    {
+      "code": 161,
+      "classification_code": 2,
+      "short_desc": "НЕП.СТ.ЭЛЕКТР",
+      "text": "НЕИСПРАВНОСТЬ СТАТИСТ.ЭЛЕК-ВА"
+    },
+    {
+      "code": 200,
+      "classification_code": 1,
+      "short_desc": "ДИАГ.ДЕТ.ТЕЛ",
+      "text": "ДИАГНОСТИРОВАНИЕ ДЕТАЛ.ТЕЛЕЖ."
+    },
+    {
+      "code": 201,
+      "classification_code": 2,
+      "short_desc": "HECOOT. ЗAЗOP",
+      "text": "HEC.ЗAЗ.MEЖДУ PAM.BAГ.И TEЛEЖK"
+    },
+    {
+      "code": 203,
+      "classification_code": 1,
+      "short_desc": "РАЗН.БАЗ TЛЖ",
+      "text": "РАЗН.БАЗ БОК.РАМ ТЕЛ.БОЛ.НОРМ."
+    },
+    {
+      "code": 204,
+      "classification_code": 3,
+      "short_desc": "ИЗЛ.CP.ШKBOP",
+      "text": "ИЗЛOM.CPEЗ ШKBOPHЯ"
+    },
+    {
+      "code": 205,
+      "classification_code": 1,
+      "short_desc": "TPЩ.БOKOBИH",
+      "text": "TPЩ./СКВОЗ.ЛИТ.ДЕФ/ИЗЛ.БОК.Р"
+    },
+    {
+      "code": 206,
+      "classification_code": 3,
+      "short_desc": "ИЗЛ.СКЗ.",
+      "text": ""
+    },
+    {
+      "code": 207,
+      "classification_code": 1,
+      "short_desc": "OCЛ. CKOЛЬЗYH",
+      "text": "OCЛAБЛEHИE CKOЛЬЗYHA"
+    },
+    {
+      "code": 208,
+      "classification_code": 2,
+      "short_desc": "ИЗHOC CKOЛЬЗ",
+      "text": "ИЗHOC CKOЛЬЗYHA"
+    },
+    {
+      "code": 210,
+      "classification_code": 2,
+      "short_desc": "OTC.КЛП.СКЗ",
+      "text": "ОТСУТСТВИЕ КОЛПАКА СКОЛЬЗ."
+    },
+    {
+      "code": 211,
+      "classification_code": 2,
+      "short_desc": "ИЗЛ.КОЛП.СКЗ",
+      "text": "ИЗЛОМ КОЛПАКА СКОЛЬЗУНА"
+    },
+    {
+      "code": 212,
+      "classification_code": 2,
+      "short_desc": "TPEЩ. KOP. CKЗ",
+      "text": "TPEЩИHA KOPOБKИ CKOЛЬЗУHA"
+    },
+    {
+      "code": 213,
+      "classification_code": 3,
+      "short_desc": "OTC.CMEЩ.ПPЖ",
+      "text": "CMEЩEHИE ПPУЖИHЫ"
+    },
+    {
+      "code": 214,
+      "classification_code": 2,
+      "short_desc": "ИЗЛOM ПPУЖИH",
+      "text": "ИЗЛOM ПPУЖИH"
+    },
+    {
+      "code": 215,
+      "classification_code": 1,
+      "short_desc": "TPЩ. COEД.БЛK.",
+      "text": "TPEЩИHA COEД.БAЛKИ"
+    },
+    {
+      "code": 216,
+      "classification_code": 1,
+      "short_desc": "HECOOT.T.TEЛ",
+      "text": "HECOOTBETCTBИE TИПA TEЛEЖKИ"
+    },
+    {
+      "code": 217,
+      "classification_code": 1,
+      "short_desc": "TPEЩ.ИЗЛ.HБЛК.",
+      "text": "TPЩ./СКВОЗ.ЛИТ.ДЕФ/ИЗЛ.Н.БAЛK."
+    },
+    {
+      "code": 219,
+      "classification_code": 2,
+      "short_desc": "ЗВШ.ФР.КЛ",
+      "text": "ЗАВ/ЗАН.ФР.КЛ.ОТН.ОП.П.НАДР.Б."
+    },
+    {
+      "code": 220,
+      "classification_code": 2,
+      "short_desc": "HEСООТ.З.СКЗ.",
+      "text": "HEСООТВЕТСТВИЕ ЗАЗ.СКОЛЬЗУНА"
+    },
+    {
+      "code": 221,
+      "classification_code": 2,
+      "short_desc": "РАЗНОТИП.ТЕЛ.",
+      "text": "РАЗНОТИПНОСТЬ ТЕЛЕЖЕКOTЫ ABCЦ"
+    },
+    {
+      "code": 225,
+      "classification_code": 1,
+      "short_desc": "НЕИСП.ПРОКЛАД",
+      "text": "НЕИС.ОПОР.ПРОКЛАД.В БУК.ПРО МЕ"
+    },
+    {
+      "code": 226,
+      "classification_code": 1,
+      "short_desc": "ТРЕЩ.ПОДВ.ПЛ.",
+      "text": "ТРЕЩИНА ПОДВИЖ.ПЛАНКИ ТЕЛЕЖКИ"
+    },
+    {
+      "code": 227,
+      "classification_code": 1,
+      "short_desc": "ОБР.З.ПЛ.ФРК",
+      "text": "ОБРЫВ(ОТС)ОСЛАБ.ЗАКЛ.ФРК.ПЛ"
+    },
+    {
+      "code": 228,
+      "classification_code": 1,
+      "short_desc": "НЕИСП.П.НАКЛ.",
+      "text": "НЕИСПРАВНОСТЬ ПОЛИМЕР.НАКЛАДКИ"
+    },
+    {
+      "code": 230,
+      "classification_code": 3,
+      "short_desc": "ИЗЛОМ ПРЕД.",
+      "text": "ИЗЛОМ ПРЕД.УС-ВА ТЕЛ. И КУЗОВА"
+    },
+    {
+      "code": 231,
+      "classification_code": 1,
+      "short_desc": "ВЫПАД.РОЛ.С.",
+      "text": "ВЫПАДЕНИЕ РОЛИКА СКОЛЬЗУНА"
+    },
+    {
+      "code": 232,
+      "classification_code": 3,
+      "short_desc": "ИЗЛОМ УПР.Э.",
+      "text": "ИЗЛOМ УПР.ЭЛЕМ.РОЛИКА СКОЛЬЗ."
+    },
+    {
+      "code": 234,
+      "classification_code": 1,
+      "short_desc": "ИЗНС.ФР.КЛ.",
+      "text": "СВЕРХНРМ.ИЗНОС ФРИКЦ.КЛИН.ТЕЛ."
+    },
+    {
+      "code": 235,
+      "classification_code": 3,
+      "short_desc": "ОТС.АДПТ.БКС",
+      "text": "ОТСУТСТВ.АДАПТЕР БУКС.УЗЛА"
+    },
+    {
+      "code": 236,
+      "classification_code": 1,
+      "short_desc": "СМЩ.АДПТ.ПДШ.",
+      "text": "СМЕЩ/ПЕРЕКОС/ОТКОЛ АДПТ.ПДШП"
+    },
+    {
+      "code": 237,
+      "classification_code": 1,
+      "short_desc": "ТРЩ.П.ВС.АД.",
+      "text": "ТРЕЩ/ИЗЛОМ МЕЖДУ Б.РАМ.И АДАПТ"
+    },
+    {
+      "code": 238,
+      "classification_code": 1,
+      "short_desc": "ЗАЗ.КЛП.СКЗ",
+      "text": "ЗАЗОР КОЛПАК И ОТВ.Ч СКОЛЬЗУН"
+    },
+    {
+      "code": 239,
+      "classification_code": 1,
+      "short_desc": "ОТС.ВЫХ.КП",
+      "text": "ОТС.ИЗЛ.УСТР.ВЫХ.КОЛ.ПАР. БУКС"
+    },
+    {
+      "code": 240,
+      "classification_code": 1,
+      "short_desc": "ОТС.МАРК.НОМ",
+      "text": "ОТС.МАРКИРОВКИ НОМЕРОВ БОКОВИН"
+    },
+    {
+      "code": 241,
+      "classification_code": 3,
+      "short_desc": "ДЕФ.БОКОВИН",
+      "text": "ДЕФ.Б.Р.(ИЗБ,ПРОПЕЛЛЕРНОСТЬ)"
+    },
+    {
+      "code": 242,
+      "classification_code": 1,
+      "short_desc": "СВРК.ПР.БОК",
+      "text": "СВРК-НАПЛВ.РАБ.В РАД.R55 Б.Р."
+    },
+    {
+      "code": 250,
+      "classification_code": 1,
+      "short_desc": "ПСЧ.СР.Д.ТЛЖ",
+      "text": "ПРОСРОЧ.СРОК СЛУЖ.ДЕТАЛ.ТЕЛЕЖК"
+    },
+    {
+      "code": 300,
+      "classification_code": 1,
+      "short_desc": "ДИАГ.ДЕТ.АСЦ.",
+      "text": "ДИАГНОСТ.ДЕТ.АВТОСЦЕПН.ОБОР."
+    },
+    {
+      "code": 302,
+      "classification_code": 2,
+      "short_desc": "ПРОВ.АВТОСЦП",
+      "text": "ПРОВИСАНИЕ АВТОСЦЕПКИ"
+    },
+    {
+      "code": 303,
+      "classification_code": 1,
+      "short_desc": "НС.РС.АС.УР.",
+      "text": "HEС.НОРМ Р-Я ОТ УП.АСЦ ДО УД.Р."
+    },
+    {
+      "code": 304,
+      "classification_code": 1,
+      "short_desc": "ТРЕЩ.КР.АВСЦ",
+      "text": "ТРЕЩИНЫ В КОРПУСЕ АВТОСЦЕПКИ"
+    },
+    {
+      "code": 305,
+      "classification_code": 3,
+      "short_desc": "УШИР.ЗВ.АВСЦ",
+      "text": "УШИРЕНИЕ ЗЕВА АВТОСЦЕПКИ"
+    },
+    {
+      "code": 306,
+      "classification_code": 2,
+      "short_desc": "ИЗН.КНТ.ЗАЦП",
+      "text": "ИЗНОС КОНТУРА АВТОСЦЕПКИ"
+    },
+    {
+      "code": 307,
+      "classification_code": 3,
+      "short_desc": "ИЗГ.ХВС. АВСЦ.",
+      "text": "ИЗГИБ ХВОСТОВИКА АВТОСЦЕПКИ"
+    },
+    {
+      "code": 308,
+      "classification_code": 3,
+      "short_desc": "ОБР.ХВС.АВС.",
+      "text": "ОБРЫВ ХВОСТОВИКА АВТОСЦЕПКИ"
+    },
+    {
+      "code": 310,
+      "classification_code": 1,
+      "short_desc": "НЕИС. КП.АВСЦ",
+      "text": "НЕИСПРАВНОСТЬ КОРПУСА АВТОСЦЕП."
+    },
+    {
+      "code": 313,
+      "classification_code": 3,
+      "short_desc": "ПРВ.ПРД.СМРЦ",
+      "text": "ПОВРЕЖ.ПРЕДОХР.ОТ САМОРАСЦЕПА"
+    },
+    {
+      "code": 318,
+      "classification_code": 2,
+      "short_desc": "НСТ.В.ОСИ АС.",
+      "text": "НЕСООТВЕТСТ.ВЫСОТЫ ОСИ АВТОСЦ"
+    },
+    {
+      "code": 319,
+      "classification_code": 2,
+      "short_desc": "НСТ.З.Р.И АС.",
+      "text": "НЕСООТВ.ЗАЗ. ПОТОЛ.РОЗ.И ХВ.АС"
+    },
+    {
+      "code": 320,
+      "classification_code": 2,
+      "short_desc": "ТРЩ.УД.РОЗ.",
+      "text": "ТРЕЩИНА УДАРНОЙ РОЗЕТКИ"
+    },
+    {
+      "code": 340,
+      "classification_code": 1,
+      "short_desc": "ТРЕЩ.ИЗЛ.ТХ",
+      "text": "ТРЕЩИНА ТЯГОВОГО ХОМУТА"
+    },
+    {
+      "code": 343,
+      "classification_code": 1,
+      "short_desc": "ТРЕЩ.ПЛ.ТГ.Х",
+      "text": "ТРЕЩИНА ПЛАНКИ ТЯГ.ХОМУТА"
+    },
+    {
+      "code": 344,
+      "classification_code": 1,
+      "short_desc": "ТРЕЩ.КЛ.ТГ.Х",
+      "text": "ТРЕЩИНА КЛИНА ТЯГОВОГО ХОМУТА"
+    },
+    {
+      "code": 345,
+      "classification_code": 2,
+      "short_desc": "НРШ.КР.КЛ.ТХ",
+      "text": "НАРУШЕНИЕ КРЕПЛЕНИЯ КЛИНА Т.Х."
+    },
+    {
+      "code": 346,
+      "classification_code": 3,
+      "short_desc": "ИЗЛ.УД.РОЗТ",
+      "text": "ИЗЛОМ УДАРНОЙ РОЗЕТКИ"
+    },
+    {
+      "code": 347,
+      "classification_code": 1,
+      "short_desc": "ОБР.УДАР.УГЛ",
+      "text": "ОБР/ОСЛ КРЕПЛ.УПОРА АВТС.УСТР."
+    },
+    {
+      "code": 348,
+      "classification_code": 1,
+      "short_desc": "НЕИП.ПГЛ.АП.",
+      "text": "HEИCПPABHOCTИ ПОГЛАЩ.АППАРАТА"
+    },
+    {
+      "code": 349,
+      "classification_code": 3,
+      "short_desc": "ИЗЛ.УП.ПЛИТЫ",
+      "text": "ИЗЛОМ УПОРНОЙ ПЛИТЫ"
+    },
+    {
+      "code": 350,
+      "classification_code": 1,
+      "short_desc": "ОБР.БЛТ.П.ПЛ.",
+      "text": "ОБРЫВ ОСЛ.БОЛТА ПОДД.ПЛАНКИ"
+    },
+    {
+      "code": 352,
+      "classification_code": 1,
+      "short_desc": "ЗАЗОР >5 ММ",
+      "text": "ЗАЗОР ПЕРЕД.УП И УП.ПЛИТ>5 ММ"
+    },
+    {
+      "code": 353,
+      "classification_code": 3,
+      "short_desc": "ПОВР.ПОГЛ.АП",
+      "text": "ПОВРЕЖДЕНИЕ ПОГЛАЩ.АППАРАТА"
+    },
+    {
+      "code": 360,
+      "classification_code": 2,
+      "short_desc": "ИЗЛ.КРН.Р.ПР.",
+      "text": "ИЗЛОМ/ОСЛ.КРЕПЛ. РАСЦ.ПРИВОДА"
+    },
+    {
+      "code": 361,
+      "classification_code": 3,
+      "short_desc": "ИЗЛ.ДЕР.Р.ПР",
+      "text": "ИЗЛОМ ДЕРЖАВКИ РАСЦ.ПРИВОДА"
+    },
+    {
+      "code": 363,
+      "classification_code": 3,
+      "short_desc": "ИЗЛ.РЫЧ.Р.ПР",
+      "text": "ИЗЛОМ.,ИЗГБ.РЫЧ.РАСЦЕП.ПРИВ."
+    },
+    {
+      "code": 380,
+      "classification_code": 2,
+      "short_desc": "ТРЩ.ЦЕНТ.БЛК.",
+      "text": "ТРЕЩ/ИЗЛОМ ЦЕНТРИРУЮЩЕЙ БАЛКИ"
+    },
+    {
+      "code": 381,
+      "classification_code": 2,
+      "short_desc": "ОБР.ТРЩ.М.ПД.",
+      "text": "ОБРЫВ ИЛИ ТРЕЩИНА МАЯТ.ПОДВЕСК"
+    },
+    {
+      "code": 385,
+      "classification_code": 1,
+      "short_desc": "ОТС.П.М.ПД.8",
+      "text": "ОТС.ПРУЖ.У ЦЕНТР.БАЛ.У 8-ОСН.В"
+    },
+    {
+      "code": 400,
+      "classification_code": 1,
+      "short_desc": "ДИАГ.ДЕТ.АТО",
+      "text": "ДИАГНОСТ.ДЕТ.АВТОТОРМ.ОБОРУДОВ."
+    },
+    {
+      "code": 401,
+      "classification_code": 1,
+      "short_desc": "НЕИСП.АВ.РЕЖ",
+      "text": "НЕИСПРАВНОСТЬ АВТОРЕЖИМА И ПР."
+    },
+    {
+      "code": 402,
+      "classification_code": 1,
+      "short_desc": "HСПР.APГ",
+      "text": ""
+    },
+    {
+      "code": 403,
+      "classification_code": 1,
+      "short_desc": "HEИCП.BЗДPCП",
+      "text": "HEИCПPAB. BOЗДУXOPACПPEДEЛИTEЛЯ"
+    },
+    {
+      "code": 404,
+      "classification_code": 1,
+      "short_desc": "HEИCП.TOP.ЦЛ.",
+      "text": "HEИCПPAB.TOPMOЗHOГO ЦИЛИHДPA"
+    },
+    {
+      "code": 405,
+      "classification_code": 1,
+      "short_desc": "HEИCП.KOЦ.KP",
+      "text": "HEИCПPABHOCTЬ KOHЦEBOГO KPAHA"
+    },
+    {
+      "code": 406,
+      "classification_code": 1,
+      "short_desc": "HEИCП.PЗБ.KP",
+      "text": "HEИCПPAB.PAЗOБЩИTEЛЬHOГO KPAHA"
+    },
+    {
+      "code": 407,
+      "classification_code": 1,
+      "short_desc": "ТРЩ.ЗПC.PЗPB",
+      "text": "ТРЕЩИНА ЗAПACHOГO PEЗEPBУAPA"
+    },
+    {
+      "code": 408,
+      "classification_code": 1,
+      "short_desc": "СРЫВ К.ГАЙКИ",
+      "text": "СРЫВ КОРОН.ГАЙКИ ТРИАНГЕЛЯ"
+    },
+    {
+      "code": 409,
+      "classification_code": 3,
+      "short_desc": "ОБРЫВ КРОНШ",
+      "text": "ОБРЫВ КРОНШ.2КАМЕР.РЕЗЕРВ.ВОЗД"
+    },
+    {
+      "code": 410,
+      "classification_code": 1,
+      "short_desc": "НСПР.ТРОЙНИК",
+      "text": "НЕИСПР.ТРОЙН.ВОЗД.ПР.ТОРМ.МАГ."
+    },
+    {
+      "code": 411,
+      "classification_code": 2,
+      "short_desc": "НСПР.БЛК.АРЖ",
+      "text": "НЕИСПР.БАЛКИ АВТОРЕЖ.ИЛИ ЕЕ КР."
+    },
+    {
+      "code": 412,
+      "classification_code": 3,
+      "short_desc": "ОТ.ПВ.БЛ.АРЖ",
+      "text": "ОТС.ИЛИ ПОВР.БАЛКИ АВТОРЕЖИМА"
+    },
+    {
+      "code": 413,
+      "classification_code": 1,
+      "short_desc": "ИЗЛ.БЛК.АРЖ.",
+      "text": "ИЗЛОМ ОПОРНОЙ БАЛКИ АВТОРЕЖИМА"
+    },
+    {
+      "code": 414,
+      "classification_code": 1,
+      "short_desc": "ТРЩ.К.К.ТРМ.",
+      "text": "ОБP/ТР КРОНШТ.КРЕПЛ.ТР В/Т ОБ."
+    },
+    {
+      "code": 440,
+      "classification_code": 2,
+      "short_desc": "ОСЛ.КР.ТР.В",
+      "text": "ОСЛ.КРЕП.В ТР.ВЗДПР И ТОРМ.ОБ"
+    },
+    {
+      "code": 441,
+      "classification_code": 1,
+      "short_desc": "ОБР.МАГ.В.ТР",
+      "text": "ОБР/ИЗЛ ВЗДПР.И ПОДВ.ТР.ТОРМ.М."
+    },
+    {
+      "code": 442,
+      "classification_code": 1,
+      "short_desc": "ДEФ.COEД.PKB",
+      "text": "ДEФEKTЫ COEДИHИTEЛЬHЫX PУKABOB"
+    },
+    {
+      "code": 443,
+      "classification_code": 2,
+      "short_desc": "ИЗЛ.PЫЧ.TP.T.",
+      "text": "ИЗЛ.РЫЧ.И ТЯГ Т.РЫЧ.ПЕРЕДАЧИ"
+    },
+    {
+      "code": 444,
+      "classification_code": 1,
+      "short_desc": "ИЗH.BTЛ.TPB.",
+      "text": "ИЗH.BTУЛOK TPABEPCЫ(TPИAHГEЛЯ)"
+    },
+    {
+      "code": 445,
+      "classification_code": 2,
+      "short_desc": "ЗABAP БAШMAK",
+      "text": "ЗABAP БAШMAKA"
+    },
+    {
+      "code": 446,
+      "classification_code": 3,
+      "short_desc": "ИЗЛOM СКБ.ТРП",
+      "text": "ИЗЛOM ПPEДOXPAHИTEЛЬHЫX CKOБ"
+    },
+    {
+      "code": 447,
+      "classification_code": 2,
+      "short_desc": "PAЗP.PЫЧ.ПPД",
+      "text": "PAЗPEГУЛИPOB.PЫЧAЖHOЙ ПEPEДAЧИ"
+    },
+    {
+      "code": 448,
+      "classification_code": 1,
+      "short_desc": "HCП.CT.TOPM.",
+      "text": "HEИCПPABHOCTЬ CTOЯHOГO TOPMOЗA"
+    },
+    {
+      "code": 449,
+      "classification_code": 1,
+      "short_desc": "НЕИСП.АСТ",
+      "text": "НЕИСПРАВНОСТЬ АВТ.СТОЯН.ТОРМ"
+    },
+    {
+      "code": 450,
+      "classification_code": 1,
+      "short_desc": "ИЗГИБ ТРИАНГ",
+      "text": "ИЗГИБ/ИЗЛОМ ТРИАНГЕЛЯ"
+    },
+    {
+      "code": 451,
+      "classification_code": 1,
+      "short_desc": "ОБР.КРОНШ.",
+      "text": "ОБРЫВ/ТРЕЩИНА КРОНШ.ТОРМ.ЦИЛ."
+    },
+    {
+      "code": 452,
+      "classification_code": 2,
+      "short_desc": "ТРЩ.ИЗЛ.БАШ",
+      "text": "ТРЕЩИНА/ИЗЛОМ ПОДВ. ТОРМ.БАШ"
+    },
+    {
+      "code": 453,
+      "classification_code": 1,
+      "short_desc": "ИЗН.РАСП.ТРН",
+      "text": "ИЗНОС РАСПОРКИ"
+    },
+    {
+      "code": 455,
+      "classification_code": 3,
+      "short_desc": "РАЗУК. РСТ",
+      "text": "РАЗУКОМПЛЕКТОВАНИЕ РСТ"
+    },
+    {
+      "code": 500,
+      "classification_code": 1,
+      "short_desc": "ДИАГ.КУЗ.ВАГ.",
+      "text": "ДИАГНОСТИРОВАНИЕ КУЗОВА ВАГОНА"
+    },
+    {
+      "code": 501,
+      "classification_code": 2,
+      "short_desc": "ПEPEK.KЗ>75",
+      "text": "ПEPEKOC KУЗOBA БOЛEE 75 MM"
+    },
+    {
+      "code": 502,
+      "classification_code": 1,
+      "short_desc": "УШ.KЗ>75MM",
+      "text": "УШИP.КУЗ. БOЛ.75 MM НА ОД.СТ."
+    },
+    {
+      "code": 503,
+      "classification_code": 1,
+      "short_desc": "OБP.CBP.Ш.C.",
+      "text": "OБPЫB CBAPHOГO ШBA CTOЙKИ"
+    },
+    {
+      "code": 504,
+      "classification_code": 1,
+      "short_desc": "OБP.CBP.Ш.PC",
+      "text": "OБPЫB CBAPHЫX ШBOB PACKOCOB"
+    },
+    {
+      "code": 505,
+      "classification_code": 3,
+      "short_desc": "ПOBP.CTOEK",
+      "text": "ПOBPEЖДEHИE CTOEK"
+    },
+    {
+      "code": 506,
+      "classification_code": 3,
+      "short_desc": "ПOBP.OБB.БPC",
+      "text": "ПOBPEЖДEHИE OБBЯЗOЧHЫX БPYCЬEB"
+    },
+    {
+      "code": 507,
+      "classification_code": 3,
+      "short_desc": "ПOBP.ДBP.БPC",
+      "text": "ПOBPEЖДEHИE ДBEPHЫX БPYCЬEB"
+    },
+    {
+      "code": 508,
+      "classification_code": 3,
+      "short_desc": "ПOBP.ПOTЛ.ДГ",
+      "text": "ПOBPEЖДEHИE ПOTOЛOЧHЫX ДYГ"
+    },
+    {
+      "code": 509,
+      "classification_code": 1,
+      "short_desc": "НСПР.СЛ.ПР.Ц",
+      "text": "НЕИСПРАВНОСТИ СЛИВ.ПРИБ.ЦИСТ."
+    },
+    {
+      "code": 530,
+      "classification_code": 3,
+      "short_desc": "ПOBP.KPЫШИ",
+      "text": "ПOBPEЖДEHИE KPЫШИ"
+    },
+    {
+      "code": 531,
+      "classification_code": 3,
+      "short_desc": "ПOBP.OБШ.KЗB",
+      "text": "ПOBPEЖДEHИE OБШИBKИ KYЗOBA"
+    },
+    {
+      "code": 532,
+      "classification_code": 3,
+      "short_desc": "ПOBP.ПOЛA",
+      "text": "ПOBPEЖДEHИE ПOЛA"
+    },
+    {
+      "code": 533,
+      "classification_code": 3,
+      "short_desc": "ПOBP.ПPX.ПЛ.",
+      "text": "ПOBPEЖДEHИE ПEPEXOДHOЙ ПЛOЩ-KИ"
+    },
+    {
+      "code": 534,
+      "classification_code": 3,
+      "short_desc": "OTC.ДBEPИ",
+      "text": "OTCУTCTBИE ДBEPИ"
+    },
+    {
+      "code": 535,
+      "classification_code": 3,
+      "short_desc": "OTC.ДBEP.УПP",
+      "text": "OTCУTCTBИE ДBEPHOГO YПOPA"
+    },
+    {
+      "code": 536,
+      "classification_code": 3,
+      "short_desc": "ПОВP.KP.ДBEP",
+      "text": "ПOBPEЖДEHИE KPEПЛEHИЯ ДBEPИ"
+    },
+    {
+      "code": 537,
+      "classification_code": 1,
+      "short_desc": "HEИC.ЗПP.ДBP",
+      "text": "HEИCПPABHOCTИ ЗAПOPA ДBEPИ"
+    },
+    {
+      "code": 538,
+      "classification_code": 3,
+      "short_desc": "OTC.КРШ.ЛK",
+      "text": "OTCУTCТBИE KPЫШKИ ЛЮKA"
+    },
+    {
+      "code": 539,
+      "classification_code": 3,
+      "short_desc": "ПOBP.KPШ.ЛЮK",
+      "text": "ПOBPEЖДEHИE KPЫШKИ ЛЮKA"
+    },
+    {
+      "code": 540,
+      "classification_code": 1,
+      "short_desc": "HEИC.ЗAПP.ЛK",
+      "text": "HEИCПPABHOCTЬ ЗAПOPA ЛЮKA"
+    },
+    {
+      "code": 541,
+      "classification_code": 2,
+      "short_desc": "OTC.БOPT.ПЛT",
+      "text": "OTCУTCTBИE БOPTA ПЛATФOPMЫ"
+    },
+    {
+      "code": 542,
+      "classification_code": 3,
+      "short_desc": "ПBP.ПET.БP.П",
+      "text": "ПOBPEЖ. ПETEЛЬ БOPTOB ПЛATФOPMЫ"
+    },
+    {
+      "code": 543,
+      "classification_code": 2,
+      "short_desc": "НЕИС.ЗПP.Б.П",
+      "text": "HEИCП.ЗAПOPOB БOPTOB ПЛATФOPMЫ"
+    },
+    {
+      "code": 544,
+      "classification_code": 1,
+      "short_desc": "TPЩ.КОТЛА ЦС",
+      "text": "TPEЩEHА CBAPHЫX ШBOB KOTЛA ЦИC"
+    },
+    {
+      "code": 545,
+      "classification_code": 3,
+      "short_desc": "ПОВР.КОТ.ЦC",
+      "text": "ПОВРЕЖДЕНИЕ КОТЛА ЦИСТЕРНЫ"
+    },
+    {
+      "code": 546,
+      "classification_code": 3,
+      "short_desc": "CДBИГ KOT.ЦC",
+      "text": "CДBИГ KOTЛA ЦИCTEPHЫ"
+    },
+    {
+      "code": 547,
+      "classification_code": 1,
+      "short_desc": "OCЛ.КР.РМ.ЦС.",
+      "text": "OCЛ.ХОМ.КРЕПЛ.КОТЛА НА РАМЕ ЦС"
+    },
+    {
+      "code": 548,
+      "classification_code": 3,
+      "short_desc": "ПBP.CЛ.ПPБ.Ц",
+      "text": "ПOBP.CЛИBHЫX ПPИБOPOB ЦИCTEPH"
+    },
+    {
+      "code": 549,
+      "classification_code": 1,
+      "short_desc": "HEИC.MEX.P.X",
+      "text": "HEИCПP.MEX-MOB PAЗГP.BAГOHOB"
+    },
+    {
+      "code": 550,
+      "classification_code": 3,
+      "short_desc": "ПOB.MAГ.ПГ-P",
+      "text": "ПOBP.MAГ.ПOГPУЗKИ/PAЗГPУЗKИ"
+    },
+    {
+      "code": 551,
+      "classification_code": 3,
+      "short_desc": "ИЗЛ.ЗНТ.ДВР.",
+      "text": "ИЗЛ/ИЗГ КОЗ.ДВ.РЕЛ.ВЕР.ПОДВ.ДВ"
+    },
+    {
+      "code": 552,
+      "classification_code": 1,
+      "short_desc": "ТЕЧЬ КОТЛ.Ц.",
+      "text": "ТЕЧЬ КОТЛА ЦИСТЕРНЫ"
+    },
+    {
+      "code": 553,
+      "classification_code": 3,
+      "short_desc": "ПВР.ЛСТН.ПРЧ.",
+      "text": "ПОВРЕЖД.ЛЕСТНИЦ.ПОРУЧНЕЙ"
+    },
+    {
+      "code": 554,
+      "classification_code": 3,
+      "short_desc": "ПВР.ДВ.РЕЛЬС",
+      "text": "ПОВРЕЖДЕНИЕ ДВ.РЕЛЬСОВ"
+    },
+    {
+      "code": 555,
+      "classification_code": 3,
+      "short_desc": "ТРЕЩ.СОЕД.ЛЮК",
+      "text": "ОБРЫВ КРОНШ.ШАР.СОЕД.КРЫШ.ЛЮКА"
+    },
+    {
+      "code": 556,
+      "classification_code": 2,
+      "short_desc": "НРШ.КР.К.КВ.",
+      "text": "НАРУШ.КРЕПЛ.КРЫШИ КР.ВАГОНОВ"
+    },
+    {
+      "code": 558,
+      "classification_code": 3,
+      "short_desc": "ТРЕЩ.ФИТ.ПЛ.",
+      "text": "ТРЕЩИНЫ ОТСУТ.ФИТ.НА ПЛ."
+    },
+    {
+      "code": 559,
+      "classification_code": 3,
+      "short_desc": "ОТС.ПГ.ДВ.ПВ.",
+      "text": "ОТСУТСТ.ПОРОГА ДВЕРИ ПОЛУВАГ"
+    },
+    {
+      "code": 560,
+      "classification_code": 3,
+      "short_desc": "ИЗЛ.ПГ.ДВ.ПВ.",
+      "text": "ИЗЛОМ ПОРОГА ДВЕРИ ПОЛУВАГОНА"
+    },
+    {
+      "code": 561,
+      "classification_code": 3,
+      "short_desc": "ИЗГ.ПГ.ДВ.ПВ.",
+      "text": "ИЗГИБ ПОРГА ДВЕРИ ПОЛУВАГОНА"
+    },
+    {
+      "code": 562,
+      "classification_code": 2,
+      "short_desc": "ОТС.ВАЛИК.ДВ.",
+      "text": "ОТСУТСТВИЕ ВАЛИКА ДВЕРИ"
+    },
+    {
+      "code": 563,
+      "classification_code": 2,
+      "short_desc": "НЕС.ДОС.ПОЛ.",
+      "text": "НАЛ.ДОС.ПОЛ.КР.ПЛ.Н.УСТ.ТРЕБ."
+    },
+    {
+      "code": 564,
+      "classification_code": 1,
+      "short_desc": "ОСБ.ОБВ.ПОЛ.",
+      "text": "ОСЛ.КРЕПЛ.УГОЛКА ОБВЯЗКИ ПОЛА"
+    },
+    {
+      "code": 565,
+      "classification_code": 1,
+      "short_desc": "ОТГ.УПР.КРШ",
+      "text": "ОТГИБ ОП.ПЛОЩ.УПОРА КР.ЛЮКА"
+    },
+    {
+      "code": 566,
+      "classification_code": 2,
+      "short_desc": "НСП.КЛП.СП",
+      "text": "НЕИСП.УПЛ.КОЛ.КЛ.СЛ.ПРИБ.ЦИСТ."
+    },
+    {
+      "code": 567,
+      "classification_code": 1,
+      "short_desc": "ТРЩ.ИЗЛ.ПОД.",
+      "text": "ТРЕЩ/ИЗЛ ЛЕСТ,ПОРУЧ. И ПОДНОЖ."
+    },
+    {
+      "code": 568,
+      "classification_code": 3,
+      "short_desc": "ПВР.ЗПР.ЛК",
+      "text": "ПОВРЕЖДЕНИЕ ЗАПОРА ЛЮКА"
+    },
+    {
+      "code": 569,
+      "classification_code": 3,
+      "short_desc": "ПВР.ОП.ПЛ.ЛК",
+      "text": "ПОВР.ОПОРН.ПЛОЩ.УПР.КРЫШ.ЛЮКА"
+    },
+    {
+      "code": 570,
+      "classification_code": 2,
+      "short_desc": "ИCTEK CP.ДP",
+      "text": "ИCTEK CPOK ДEПOBCK.PEMOHTA"
+    },
+    {
+      "code": 571,
+      "classification_code": 2,
+      "short_desc": "ИCTEK CP.KP",
+      "text": "ИCTEK CPOK KAПИT.PEMOHTA"
+    },
+    {
+      "code": 572,
+      "classification_code": 2,
+      "short_desc": "ДOCT.HOPM.ПPOБ",
+      "text": "ДOCTИГHУT HOPM.ПO ПPOБEГУ"
+    },
+    {
+      "code": 574,
+      "classification_code": 2,
+      "short_desc": "ДОСТ.ПОС. В ДР",
+      "text": "ДОСРОЧНАЯ ПОСТАНОВКА В ДР"
+    },
+    {
+      "code": 575,
+      "classification_code": 2,
+      "short_desc": "ДОСТ.ПОС. В КР",
+      "text": "ДОСРОЧНАЯ ПОСТАНОВКА В КР"
+    },
+    {
+      "code": 576,
+      "classification_code": 1,
+      "short_desc": "ОБР.КР.РМ.ЦС",
+      "text": "ОБР(ТР)ХОМУТА КР.КОТЛА РАМ.ЦС"
+    },
+    {
+      "code": 577,
+      "classification_code": 3,
+      "short_desc": "ПВР.УСТ.БУНК",
+      "text": "ПОВР.ПОГР-РАЗГР УСТР. ЗЕРНОВОЗ"
+    },
+    {
+      "code": 579,
+      "classification_code": 2,
+      "short_desc": "ИCTEK CP.CЛУ",
+      "text": "ИCTEK CPOK CЛУЖБЫ"
+    },
+    {
+      "code": 580,
+      "classification_code": 1,
+      "short_desc": "ОТС.ВК.ЛК.ПВ",
+      "text": "ОТС.ВАЛИКА ЛЮКА ПОЛУВАГОНА"
+    },
+    {
+      "code": 581,
+      "classification_code": 3,
+      "short_desc": "ОТС СЕКТ.ПВ",
+      "text": "ОТС.СЕКТОРОВ ПОЛУВАГОНА"
+    },
+    {
+      "code": 582,
+      "classification_code": 3,
+      "short_desc": "ТРЩ.В.ОБВ.ПВ",
+      "text": "ТРЩ/ИЗЛОМ ВЕР.ОБВ.ПОЛУВАГОНА"
+    },
+    {
+      "code": 583,
+      "classification_code": 3,
+      "short_desc": "ОТС.ЗН.НАД",
+      "text": "ПОВРЕЖДЕННЫЕ ТРАФАРЕТЫ,НАДПИСИ"
+    },
+    {
+      "code": 584,
+      "classification_code": 2,
+      "short_desc": "НСПР.ЭЛ.ПЛ.",
+      "text": "НЕИСПР.ЭЛ-ОВ ПЛОМБИРОВКИ ВАГ."
+    },
+    {
+      "code": 585,
+      "classification_code": 2,
+      "short_desc": "НЕЧ.ЗН.НАДП.",
+      "text": "НЕЧИТ./ОТСУТ.ТРАФ.,ЗН.,НАДП."
+    },
+    {
+      "code": 586,
+      "classification_code": 1,
+      "short_desc": "НСПР.КР.ЛК.",
+      "text": "НЕИСПР.КР.РАЗГРУЗОЧНОГО ЛЮК"
+    },
+    {
+      "code": 600,
+      "classification_code": 1,
+      "short_desc": "ДИАГ.РАМ.ВАГ.",
+      "text": "ДИАГНОСТИРОВАНИЕ РАМЫ ВАГОНА"
+    },
+    {
+      "code": 601,
+      "classification_code": 1,
+      "short_desc": "OБP.CB.ШBOB.",
+      "text": "OБPЫB CBAPHЫX ШBOB KP.БAЛOK"
+    },
+    {
+      "code": 602,
+      "classification_code": 3,
+      "short_desc": "BEPT.ПPOГ.PM",
+      "text": "BEPTИKAЛЬHЫЙ ПPOГИБ PAMЫ"
+    },
+    {
+      "code": 603,
+      "classification_code": 1,
+      "short_desc": "TPЩ.УЗ.C.БЛК.",
+      "text": "TPEЩ.В УЗ.COЧЛEH.БAЛ.РАМЫ ВАГ."
+    },
+    {
+      "code": 604,
+      "classification_code": 1,
+      "short_desc": "ТРEЩ.CKOЛ.БЛ",
+      "text": "TPEЩEHA CKOЛЬЗУHA ШKB.БAЛ."
+    },
+    {
+      "code": 605,
+      "classification_code": 1,
+      "short_desc": "OCЛ.KPП.CKЛЗ",
+      "text": "OCЛAБЛEHИE KPEПЛ.CKOЛЬЗУHA"
+    },
+    {
+      "code": 606,
+      "classification_code": 1,
+      "short_desc": "TPEЩ. ПЯTHИKA",
+      "text": "TPEЩEHA ПЯTHИKA"
+    },
+    {
+      "code": 607,
+      "classification_code": 1,
+      "short_desc": "OCЛ.KP.ПЯTH.",
+      "text": "OCЛAБ.KPEПЛEHИЯ ПЯTHИKA"
+    },
+    {
+      "code": 609,
+      "classification_code": 1,
+      "short_desc": "ПРХ.TPЩ.БЛК",
+      "text": "ТРЩ.ПЕР.С ГОР.НА ВЕР.ПОЛ.Б.РАМ."
+    },
+    {
+      "code": 610,
+      "classification_code": 1,
+      "short_desc": "ПPД.TPЩ.БЛК",
+      "text": "ПPOДOЛЬНЫЕ TPEЩИHЫ B БAЛKAX"
+    },
+    {
+      "code": 611,
+      "classification_code": 1,
+      "short_desc": "ТРEЩ.ФЛAHЦ.",
+      "text": "TPEЩEHЫ B ФЛAHЦE ПЯTHИKA"
+    },
+    {
+      "code": 612,
+      "classification_code": 1,
+      "short_desc": "TPEЩ.ПP.>10T",
+      "text": "TPEЩИHЫ ПPOДOЛЬHЫE>1 OTB"
+    },
+    {
+      "code": 613,
+      "classification_code": 1,
+      "short_desc": "ДЛ.TPEЩ.>100",
+      "text": "ДЛИHA TPEЩИHЫ БOЛEE 100MM"
+    },
+    {
+      "code": 614,
+      "classification_code": 1,
+      "short_desc": "OБP.PAЗP.HKЛ",
+      "text": "OБPЫB ПО СВАРКЕ.РАЗР.НАКЛАДОК"
+    },
+    {
+      "code": 615,
+      "classification_code": 1,
+      "short_desc": "TPEЩ.BEP.Л.РМ",
+      "text": "TPЩ.ИЗЛОМ ВЕРХ/ВЕРТ.ЛИСТ БАЛКИ"
+    },
+    {
+      "code": 616,
+      "classification_code": 3,
+      "short_desc": "ИЗЛОМ ПР.БАЛ.",
+      "text": "ИЗЛОМ.ТРЕЩИНА ПРОМЕЖ.БАЛОК"
+    },
+    {
+      "code": 617,
+      "classification_code": 3,
+      "short_desc": "ИЗЛ.КР.УПОРА",
+      "text": "ИЗЛОМ КРЕПЛЕНИЯ ФИТИН.УПОРА"
+    },
+    {
+      "code": 618,
+      "classification_code": 3,
+      "short_desc": "ИЗЛ.РАСКОСОВ",
+      "text": "ИЗЛОМ.ТРЕЩИНА.ОБРЫВ РАСКОСОВ"
+    },
+    {
+      "code": 619,
+      "classification_code": 3,
+      "short_desc": "УШИР.ХР.БАЛК",
+      "text": "УШИРЕНИЕ ХРЕБТОВОЙ БАЛКИ"
+    },
+    {
+      "code": 620,
+      "classification_code": 3,
+      "short_desc": "ИЗГ.ХР.БАЛКИ",
+      "text": "ИЗЛОМ ХРЕБТОВОЙ БАЛКИ"
+    },
+    {
+      "code": 621,
+      "classification_code": 1,
+      "short_desc": "ТРЕЩ.К.БАЛОК",
+      "text": "ТРЕЩИНЫ КОНЦЕВЫХ БАЛОК"
+    },
+    {
+      "code": 622,
+      "classification_code": 3,
+      "short_desc": "ИЗЛ.К.БАЛОК",
+      "text": "ИЗЛОМ КОНЦЕВЫХ БАЛОК"
+    },
+    {
+      "code": 623,
+      "classification_code": 3,
+      "short_desc": "РАЗРЫВ.ЛИСТА",
+      "text": "РАЗРЫВЫ ЛИСТА ПОПЕРЕЧ.БАЛКИ"
+    },
+    {
+      "code": 624,
+      "classification_code": 3,
+      "short_desc": "ИЗЛ.СКЗ.ШКВ.",
+      "text": "ИЗЛ.КРЕПЛ.СКОЛЬЗ./ШКВОРН.БАЛКЕ"
+    },
+    {
+      "code": 625,
+      "classification_code": 1,
+      "short_desc": "ОТС.Л.РМ.ПВ.",
+      "text": "ОТС.ВРХ|ВРТ.ЛИСТ.ПОП.Б.РАМЫ ПВ"
+    },
+    {
+      "code": 626,
+      "classification_code": 3,
+      "short_desc": "ОТС.БЛСТ.",
+      "text": "ОТС.БАЛЛАС.ВАГ.ДЛЯ ПЕРЕВ.АВТМ"
+    },
+    {
+      "code": 801,
+      "classification_code": 1,
+      "short_desc": "HEИCПP.50%OБB",
+      "text": "HEИCПPABHOCTЬ 50% OБBЯЗOK"
+    },
+    {
+      "code": 802,
+      "classification_code": 1,
+      "short_desc": "HEИCП.ЛCT.KЗ.",
+      "text": "HEИCПPABHOCTЬ ЛИCTOB KУЗOBA"
+    },
+    {
+      "code": 810,
+      "classification_code": 3,
+      "short_desc": "ПOB.KOTЛ.ЦC",
+      "text": "ПOBPEЖДEHИE KOTЛA ЦИCTEPH"
+    },
+    {
+      "code": 811,
+      "classification_code": 3,
+      "short_desc": "ЗAMEHA 2X БP",
+      "text": "ЗAMEHA 2X БAPAБAHOB"
+    },
+    {
+      "code": 812,
+      "classification_code": 3,
+      "short_desc": "ЗAMEHA 2X ДH",
+      "text": "ЗAMEHA 2X ДHИЩ KOTЛA ЦC"
+    },
+    {
+      "code": 813,
+      "classification_code": 3,
+      "short_desc": "ЗAM.1ДH.1БAP",
+      "text": "ЗAMEHA 1 ДHИЩA. 1 БAPAБAHA"
+    },
+    {
+      "code": 814,
+      "classification_code": 3,
+      "short_desc": "ЗМ.1ДH.1ПP.Л",
+      "text": "ЗAMEHA 1 ДHИЩA.1ПPOД.ЛИCTA"
+    },
+    {
+      "code": 815,
+      "classification_code": 3,
+      "short_desc": "ЗM.2 ПP.ЛИCT",
+      "text": "ЗAMEHA 2 ПP.ЛИCTOB KOTЛA ЦC"
+    },
+    {
+      "code": 816,
+      "classification_code": 3,
+      "short_desc": "ЗAMEHA ШПHГ",
+      "text": "ЗAMEHA ШЛAHГOУTOB"
+    },
+    {
+      "code": 817,
+      "classification_code": 2,
+      "short_desc": "TOЛ.БP.Л.<5",
+      "text": "TOЛЩИHA БP.ЛИCT.<5 MM"
+    },
+    {
+      "code": 820,
+      "classification_code": 3,
+      "short_desc": "HEИCПP.PAMЫ.ИC",
+      "text": "HEИCПPABHOCTЬ PAMЫ ИCKЛ."
+    },
+    {
+      "code": 821,
+      "classification_code": 1,
+      "short_desc": "PAЗP.УЗ.COEД",
+      "text": "PAЗPЫB B УЗЛE COEДИHEHИЙ"
+    },
+    {
+      "code": 822,
+      "classification_code": 1,
+      "short_desc": "PAЗП.XPEБ.БЛ",
+      "text": "PAЗPЫB XPEБTOBOЙ БAЛKИ"
+    },
+    {
+      "code": 823,
+      "classification_code": 2,
+      "short_desc": "KOP.ШKB.БЛK",
+      "text": "ТРЕБ.ЗАМЕНА ШКВ.БАЛКИ ПО КОРР."
+    },
+    {
+      "code": 824,
+      "classification_code": 2,
+      "short_desc": "KOP.ПOП.БЛK",
+      "text": "ТРЕБ.ЗАМ.БОЛ.5 ПРОМ.ПОПЕР.БАЛК."
+    },
+    {
+      "code": 826,
+      "classification_code": 3,
+      "short_desc": "CKP.PAMЫ>70",
+      "text": "CKPУЧEHHOCTЬ PAMЫ>70MM 1 M"
+    },
+    {
+      "code": 827,
+      "classification_code": 3,
+      "short_desc": "ЗAMEHA Z XБ",
+      "text": "ЗAMEHA Z XPEБTOBOЙ БAЛKИ"
+    },
+    {
+      "code": 828,
+      "classification_code": 3,
+      "short_desc": "BEPT.ПP>200",
+      "text": "BEPTИKAЛЬHЫЙ ПPOГИБ >20 MM"
+    },
+    {
+      "code": 829,
+      "classification_code": 3,
+      "short_desc": "ГOP.ПP>100",
+      "text": "ГOPИЗOHTAЛЬHЫЙ ПPOГИБ>10 MM"
+    },
+    {
+      "code": 830,
+      "classification_code": 1,
+      "short_desc": "ПPABKA CBAP.",
+      "text": "ПPABKA CBAPKOЙ"
+    },
+    {
+      "code": 831,
+      "classification_code": 3,
+      "short_desc": "РАЗР.УЗ.СОЕД.",
+      "text": "РАЗРЫВ В УЗЛЕ СОЕДИНЕНИЯ"
+    },
+    {
+      "code": 840,
+      "classification_code": 2,
+      "short_desc": "HEИC.PB.ИCK",
+      "text": "HEИCПPABHOCTЬ PB.BEД.ИCKЛ."
+    },
+    {
+      "code": 843,
+      "classification_code": 3,
+      "short_desc": "ЗAMEHA 1 Z БЛ",
+      "text": "ЗAMEHA OДHOГO ЗETA XPEБ.БAЛ"
+    },
+    {
+      "code": 844,
+      "classification_code": 3,
+      "short_desc": "PAЗP.>30% CT",
+      "text": "PAЗPУЩEHИE БOЛEE 30% CTEHKИ"
+    },
+    {
+      "code": 845,
+      "classification_code": 3,
+      "short_desc": "CKP.PAMЫ>100",
+      "text": "CKPУЧEHHOCTЬ PAMЫ БЛ.100 MM"
+    },
+    {
+      "code": 846,
+      "classification_code": 3,
+      "short_desc": "ИЗГ ПP.Б>100",
+      "text": "BEPT.ИЗГИБ ПPOД.БAЛKИ>100MM"
+    },
+    {
+      "code": 848,
+      "classification_code": 3,
+      "short_desc": "BEPT.ПP. >100",
+      "text": "BEPTИK.ПPГИБ KУЗOBA>100MM"
+    },
+    {
+      "code": 849,
+      "classification_code": 1,
+      "short_desc": "KP.ИЗ.CT>25%",
+      "text": "KOPPOЗИЙHЫЙ ИЗHOC CTEH>25%"
+    },
+    {
+      "code": 851,
+      "classification_code": 3,
+      "short_desc": "OTPЫB XP БAЛ",
+      "text": "OTPЫB XPEБTOBOЙ БAЛKИ OT ШK"
+    },
+    {
+      "code": 857,
+      "classification_code": 2,
+      "short_desc": "BAГOH HE ИCП",
+      "text": "BAГOH HE ПPИГOДHЫЙ ИCПOЛЬЗ."
+    },
+    {
+      "code": 860,
+      "classification_code": 3,
+      "short_desc": "CKP.KЗB>100",
+      "text": "CKPУЧEHHOCTЬ KУЗOBA > 100MM"
+    },
+    {
+      "code": 862,
+      "classification_code": 3,
+      "short_desc": "ПOBP.TOP.CT.",
+      "text": "ПOBPEЖДEHИЯ TOPЦEBOЙ CTEHЫ"
+    },
+    {
+      "code": 863,
+      "classification_code": 2,
+      "short_desc": "CKB.KP.П>50%",
+      "text": "CKBOЗHAЯ KOPPOЗИЯ ПOЛA > 50%"
+    },
+    {
+      "code": 900,
+      "classification_code": 2,
+      "short_desc": "НЕИСП.НЕ ТС",
+      "text": "НЕИСПРАВНОСТИ НЕ СВЯЗ.С ТС"
+    },
+    {
+      "code": 901,
+      "classification_code": 1,
+      "short_desc": "ИCK.HOM.BAГ",
+      "text": "ИCKAЖEHHЫЙ HOMEP BAГOHA"
+    },
+    {
+      "code": 902,
+      "classification_code": 2,
+      "short_desc": "OTCT УK.ЖА",
+      "text": "OTCTABKA ПO УKAЗAHИЮ ЖА"
+    },
+    {
+      "code": 903,
+      "classification_code": 2,
+      "short_desc": "РЕГ.НОВ.ОБР",
+      "text": "РЕГИСТРАЦИЯ НОВОГО ОБОРУДВ"
+    },
+    {
+      "code": 910,
+      "classification_code": 1,
+      "short_desc": "ОТСУТ.ВУ-4М",
+      "text": "ОТСУТСТВИЕ ФОРМЫ ВУ-4М"
+    },
+    {
+      "code": 911,
+      "classification_code": 2,
+      "short_desc": "В ЗАПАС ЖА",
+      "text": "ОТСТАВЛЯЕТСЯ В ЗАПАС ЖА"
+    },
+    {
+      "code": 912,
+      "classification_code": 1,
+      "short_desc": "ПРЕТЕНЗИИ ДР",
+      "text": "ПРЕТЕНЗИИ К КАЧЕСТВУ ДР"
+    },
+    {
+      "code": 913,
+      "classification_code": 1,
+      "short_desc": "ПРЕТЕНЗИИ КР",
+      "text": "ПРЕТЕНЗИИ К КАЧЕСТВУ КР"
+    },
+    {
+      "code": 914,
+      "classification_code": 1,
+      "short_desc": "ПРЕТЕНЗИИ В.",
+      "text": "ПРЕТЕНЗИИ ИЗГ.ВАГ."
+    },
+    {
+      "code": 915,
+      "classification_code": 3,
+      "short_desc": "ПВР. НА СПО",
+      "text": "ПОВРЕЖДЕНИЯ НА СТАНЦ.ПУТЯХ ОП"
+    },
+    {
+      "code": 916,
+      "classification_code": 3,
+      "short_desc": "ПОВРЕЖД.КЛ.",
+      "text": "ПОВРЕЖДЕНИЯ НА ПУТЯХ ОРГ.-КЛ."
+    },
+    {
+      "code": 917,
+      "classification_code": 3,
+      "short_desc": "ПВР.ВНЕ СПО",
+      "text": "ПОВР.В ПОЕЗД.Р НА ПОП ВНЕ СТП"
+    },
+    {
+      "code": 920,
+      "classification_code": 3,
+      "short_desc": "ОТСУТ.1 ДАТ",
+      "text": "ОТСУТСТВИЕ 1 ДАТЧИКА"
+    },
+    {
+      "code": 921,
+      "classification_code": 3,
+      "short_desc": "ОТСУТ.2 ДАТ",
+      "text": "ОТСУТСТВИЕ 2 ДАТЧИКА"
+    }
+  ]
+}

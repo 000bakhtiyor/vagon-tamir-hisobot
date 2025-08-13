@@ -1,6 +1,8 @@
 import { LoadStatus } from "src/common/enums/load-status.enum";
+import { OperationType } from "src/common/enums/operation-type.enum";
 import { WagonRepairType } from "src/common/enums/repair-type.enum";
-import { VagonOwnerType } from "src/common/enums/wagon-type.enum";
+import { WagonType } from "src/common/enums/wagom-type.enum";
+import { VagonOwnerType } from "src/common/enums/wagon-owner-type.enum";
 import { Ownership } from "src/ownerships/entities/ownership.entity";
 import { RepairClassification } from "src/repair-classifications/entities/repair-classification.entity";
 import { Station } from "src/stations/entities/station.entity";
@@ -17,12 +19,30 @@ export class ReleasedVagon {
     @Column({ nullable: false })
     vagonCode: string;
 
-    @Column({ type: 'date', nullable: false })
+    @Column({
+        type: 'enum',
+        enum: WagonType,
+        default: WagonType.KR,
+        nullable: false
+    })
+    vagonType: WagonType;
+
+    @Column({ type: 'date', nullable: false, default: () => 'CURRENT_TIMESTAMP' })
     releaseDate: Date;
 
-    @ManyToOne(() => Ownership, (ownership) => ownership.releasedVagons)
-    @JoinColumn({ name: 'ownershipId' })
-    ownership: Ownership;
+    @Column({
+        type: 'enum',
+        enum: OperationType,
+        default: OperationType.Release,
+        nullable: false
+    })
+    operation: OperationType
+
+    @Column({ type: 'date', nullable: true})
+    importedDate: Date
+
+    @Column({ type: 'date', nullable: true})
+    takenOutDate: Date
 
     @ManyToOne(() => RepairClassification, (repairClassification) => repairClassification.releasedVagons)
     @JoinColumn({ name: 'repairClassificationId' })
@@ -31,10 +51,14 @@ export class ReleasedVagon {
     @Column({
         type: 'enum',
         enum: VagonOwnerType,
-        default: VagonOwnerType.UZBEKISTAN_RAILWAYS,
+        default: VagonOwnerType.Invertar,
         nullable: false,
     })
     ownerType: VagonOwnerType;
+
+    @ManyToOne(() => Ownership, (ownership) => ownership.releasedVagons)
+    @JoinColumn({ name: 'ownershipId' })
+    ownership: Ownership;
 
     @ManyToOne(() => Station, (station) => station.releasedVagons)
     @JoinColumn({ name: 'stationId' })

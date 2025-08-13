@@ -43,5 +43,5 @@ export class ResponseLoginDto {
         example: 'vchd12345',
         required: false,
     })
-    vchdId?: string;
+    depoId?: string;
 }

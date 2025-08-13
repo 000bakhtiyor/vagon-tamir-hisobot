@@ -8,6 +8,9 @@ import { WagonDepotsModule } from './wagon-depots/wagon-depots.module';
 import { StationsModule } from './stations/stations.module';
 import { RepairClassificationsModule } from './repair-classifications/repair-classifications.module';
 import { OwnershipsModule } from './ownerships/ownerships.module';
+import { OutcomeModule } from './outcome/outcome.module';
+import { ImportVagonsModule } from './import-vagons/import-vagons.module';
+import { TakeOutVagonsModule } from './take-out-vagons/take-out-vagons.module';
 
 @Module({
   imports: [
@@ -25,7 +28,7 @@ import { OwnershipsModule } from './ownerships/ownerships.module';
         username: config.get('DB_USERNAME'),
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_NAME'),
-        synchronize: true, // ❌ disable in production
+        synchronize: true,
         autoLoadEntities: true,
       }),
     }),
@@ -36,6 +39,9 @@ import { OwnershipsModule } from './ownerships/ownerships.module';
     StationsModule,
     RepairClassificationsModule,
     OwnershipsModule,
+    OutcomeModule,
+    ImportVagonsModule,
+    TakeOutVagonsModule,
   ],
   controllers: [],
   providers: [],

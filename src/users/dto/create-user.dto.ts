@@ -1,5 +1,6 @@
-import { IsOptional, IsString, MinLength, IsIn } from 'class-validator';
+import { IsOptional, IsString, MinLength, IsIn, IsEnum } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { RolesEnum } from 'src/common/enums/role.enum';
 
 export class CreateUserDto {
     @ApiProperty({ example: 'john_doe' })
@@ -16,13 +17,13 @@ export class CreateUserDto {
     @IsString()
     fullName?: string;
 
-    @ApiPropertyOptional({ example: 'viewer', enum: ['admin', 'viewer'] })
+    @ApiPropertyOptional({
+        example: RolesEnum.VIEWER,
+        enum: RolesEnum,
+        description: 'User role'
+    })
     @IsOptional()
-    @IsIn(['admin', 'viewer', 'superadmin'], { message: 'Role must be admin, superadmin or viewer' })
-    role: 'admin' | 'viewer' | 'superadmin';
+    @IsEnum(RolesEnum, { message: 'Role must be moderator, superadmin or viewer' })
+    role?: RolesEnum;
 
-    @ApiPropertyOptional({ example: 'vchd12345' })
-    @IsOptional()
-    @IsString()
-    vchdId?: string;
 }
