@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateReleasedVagonDto } from './dto/create-released-vagon.dto';
 import { UpdateReleasedVagonDto } from './dto/update-released-vagon.dto';
 import { BaseResponseDto } from 'src/common/types/base-response.dto';
@@ -26,52 +26,32 @@ export class ReleasedVagonsService {
   async create(createReleasedVagonDto: CreateReleasedVagonDto, role: RolesEnum, depoId: string): Promise<BaseResponseDto<ReleasedVagon>> {
 
     if (createReleasedVagonDto.vagonNumber < 0) {
-      return new BaseResponseDto<ReleasedVagon>(
-        null,
-        'Vagon number cannot be negative',
-        400
-      );
+      throw new ConflictException('Vagon number cannot be negative')
     }
 
     if (createReleasedVagonDto.repairClassificationId == "") {
-      return new BaseResponseDto<ReleasedVagon>(
-        null,
-        'repairClassificationId must be have',
-        400
-      );
+      throw new BadRequestException('repairClassificationId must be have')
     }
 
     const existingOwnerShip = await this.ownershipRepository.findOneBy({
       id: createReleasedVagonDto.ownershipId
     });
     if (!existingOwnerShip) {
-      return new BaseResponseDto<ReleasedVagon>(
-        null,
-        'Ownership not found',
-        400
-      );
+      throw new NotFoundException('Ownership not found')
     }
 
     const existingClassification = await this.repairClassificationRepository.findOneBy({
       id: createReleasedVagonDto.repairClassificationId
     });
     if (!existingClassification) {
-      return new BaseResponseDto<ReleasedVagon>(
-        null,
-        'Repair classification not found',
-        400
-      );
+      throw new NotFoundException('Repair classification not found')
     }
 
     const existingVagon = await this.releasedVagonsRepository.findOne({
       where: { vagonNumber: createReleasedVagonDto.vagonNumber },
     });
     if (existingVagon) {
-      return new BaseResponseDto<ReleasedVagon>(
-        null,
-        'Released vagon with this number already exists',
-        400
-      );
+      throw new ConflictException('Released vagon with this number already exists')
     }
 
     let whereCondition: any;
@@ -85,11 +65,7 @@ export class ReleasedVagonsService {
     const existingStation = await this.stationRepository.findOne({ where: whereCondition });
 
     if (!existingStation) {
-      return new BaseResponseDto<ReleasedVagon>(
-        null,
-        'No station found',
-        400
-      );
+      throw new NotFoundException('No station found')
     }
 
 
@@ -162,12 +138,11 @@ export class ReleasedVagonsService {
     updateReleasedVagonDto: UpdateReleasedVagonDto
   ): Promise<BaseResponseDto<ReleasedVagon>> {
     const vagon = await this.releasedVagonsRepository.findOne({ where: { id } });
-    if (!vagon) {
-      return new BaseResponseDto<ReleasedVagon>(
-        null,
-        'Released vagon not found',
-        404
-      );
+    if (!vagon) throw new NotFoundException('Vagon not found')
+
+    const existingVagon = await this.releasedVagonsRepository.existsBy({ vagonNumber: updateReleasedVagonDto.vagonNumber })
+    if(existingVagon){
+      throw new BadRequestException('Vagon number already exists')
     }
 
     const op = updateReleasedVagonDto.operation;
@@ -178,12 +153,6 @@ export class ReleasedVagonsService {
       Object.assign(vagon, { ...updateReleasedVagonDto, takenOutDate: updateReleasedVagonDto.takenOutDate ?? new Date(), });
     } else if (op === OperationType.Release) {
       Object.assign(vagon, { ...updateReleasedVagonDto });
-    } else {
-      return new BaseResponseDto<ReleasedVagon>(
-        null,
-        'Invalid operation type',
-        400
-      );
     }
 
     await this.releasedVagonsRepository.save(vagon);

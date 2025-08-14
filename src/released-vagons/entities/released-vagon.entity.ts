@@ -13,10 +13,10 @@ export class ReleasedVagon {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({ nullable: false })
+    @Column()
     vagonNumber: number;
 
-    @Column({ nullable: false })
+    @Column()
     vagonCode: string;
 
     @Column({
