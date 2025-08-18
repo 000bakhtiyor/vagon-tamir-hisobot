@@ -19,19 +19,26 @@ export class UsersService {
     return this.userRepository.save(newUser);
   }
 
-  async findAll(): Promise<User[]> {
-    return this.userRepository.find();
+  async findAll(page: number, limit:number) {
+    const users = await this.userRepository.find({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+    return users;
   }
 
-  async findOne(id: string): Promise<User> {
+  async findOne(id: string){
     
-    const user = await this.userRepository.findOne({ where: { id } });
+    const user = await this.userRepository.findOne({ 
+      where: { id },
+    });
 
     if (!user) {
       throw new NotFoundException(`User with ID "${id}" not found.`);
     }
 
-    return user;
+    const { password, ...userWithoutPassword } = user; 
+    return userWithoutPassword;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {

@@ -7,11 +7,12 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
@@ -30,30 +31,27 @@ export class UsersController {
   @Get('me')
   @Roles(RolesEnum.VIEWER, RolesEnum.MODERATOR, RolesEnum.SUPERADMIN)
   @ApiOperation({ summary: 'Get current user information [All]' })
-  async getCurrentUser(@UserDecorator('userId') userId: string): Promise<User> {
+  async getCurrentUser(@UserDecorator('userId') userId: string){
     return this.usersService.findOne(userId);
   }
 
-  @Post()
-  @Roles(RolesEnum.SUPERADMIN)
-  @ApiOperation({ summary: 'Create new user' })
-  async create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
-
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    description: 'Page number for pagination',
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    description: 'Number of records per page',
+    type: Number,
+  })
   @Get()
   @Roles(RolesEnum.SUPERADMIN)
   @ApiOperation({ summary: 'Get all users' })
-  findAll() {
-    return this.usersService.findAll();
-  }
-
-  @Get(':id')
-  @Roles(RolesEnum.SUPERADMIN)
-  @ApiOperation({ summary: 'Get user by ID' })
-  @ApiParam({ name: 'id', type: string })
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+  findAll(@Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return this.usersService.findAll(page, limit);
   }
 
   @Patch(':id')

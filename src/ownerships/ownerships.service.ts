@@ -32,8 +32,11 @@ export class OwnershipsService {
     );
   }
 
-  async findAll(): Promise<BaseResponseDto<Ownership[]>> {
-    const ownerships = await this.ownershipRepository.find();
+  async findAll(page:number, limit:number): Promise<BaseResponseDto<Ownership[]>> {
+    const ownerships = await this.ownershipRepository.find({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
 
     return new BaseResponseDto<Ownership[]>(
       ownerships,

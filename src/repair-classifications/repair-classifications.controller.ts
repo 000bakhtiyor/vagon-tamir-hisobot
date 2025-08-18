@@ -31,10 +31,24 @@ export class RepairClassificationsController {
     description: 'Optional code to filter repair classifications',
     type: Number,
   })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    description: 'Page number for pagination',
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    description: 'Number of records per page',
+    type: Number,
+  })
   async findAll(
-    @Query('code') code?: number 
+    @Query('code') code?: number,
+    @Query('page') page?: number,
+    @Query('limit') limit?: number,
   ) {
-    return this.service.findAll(code);
+    return this.service.findAll(code, page, limit);
   }
 
 

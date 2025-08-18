@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
 import { WagonDepotsService } from './wagon-depots.service';
 import { CreateWagonDepotDto } from './dto/create-wagon-depot.dto';
 import { UpdateWagonDepotDto } from './dto/update-wagon-depot.dto';
-import { ApiTags, ApiOperation, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiParam, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
@@ -29,11 +29,23 @@ export class WagonDepotsController {
     return this.wagonDepotsService.findAllNames();
   }
 
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    description: 'Page number for pagination',
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    description: 'Number of records per page',
+    type: Number,
+  })
   @Get()
   @Roles(RolesEnum.SUPERADMIN)
   @ApiOperation({ summary: 'Retrieve all wagon depots' })
-  findAll() {
-    return this.wagonDepotsService.findAll();
+  findAll(@Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return this.wagonDepotsService.findAll(page, limit);
   }
 
 

@@ -65,9 +65,11 @@ export class WagonDepotsService {
     );
   }
 
-  async findAll(): Promise<BaseResponseDto<WagonDepot[]>> {
+  async findAll(page: number, limit: number): Promise<BaseResponseDto<WagonDepot[]>> {
     const depots = await this.wagonDepotRepository.find({
       relations: ['admins', 'stations'],
+      skip: (page - 1) * limit,
+      take: limit,
     });
     return new BaseResponseDto<WagonDepot[]>(
       depots,

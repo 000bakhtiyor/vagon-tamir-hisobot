@@ -88,6 +88,9 @@ export class AuthService {
     }
     const hashedPassword = await bcrypt.hash(registerDto.password, 10);
 
+    if(!registerDto.role || !Object.values(RolesEnum).includes(registerDto.role as RolesEnum)) {
+      throw new UnauthorizedException('Role is required and must be a valid enum value');
+    }
     const newUser = await this.usersService.create({
       ...registerDto,
       password: hashedPassword,
@@ -99,15 +102,14 @@ export class AuthService {
     if (registerDto.role === RolesEnum.MODERATOR) {
       usersDepo = await this.depoRepository.findOne({
         where: { id: registerDto.depoId },
-        relations: ['admins'], 
+        relations: ['admins'],
       });
 
       if (!usersDepo) {
-        throw new UnauthorizedException('Depo not found with given user id');
+        throw new UnauthorizedException('Depo not found with given id');
       }
-
       usersDepo.admins = [...(usersDepo.admins || []), newUser];
-
+      
       await this.depoRepository.save(usersDepo);
     }
 

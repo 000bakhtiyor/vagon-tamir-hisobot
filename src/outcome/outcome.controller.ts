@@ -13,14 +13,15 @@ export class OutcomeController {
 
   @ApiQuery({ name: 'filterType', required: false, enum: ['daily', 'monthly', 'yearly'] })
   @ApiQuery({ name: 'releaseDate', required: false, type: String, description: 'Date in format YYYY-MM-DD' })
-  @Get('/planned/released/wagons')
+  @Get('/planned/released/')
  async getPlannedReleaseWagons(@Query('releaseDate') releaseDate?: string, @Query('filterType') filterType?: 'daily' | 'monthly' | 'yearly'){
     return this.outcomeService.getPlannedReleaseWagons(releaseDate, filterType)
   }
 
-  @Get('/planned/import-taken-out/wagons')
-  async getImportTakenOutWagonsCount(@UserDecorator('depoId') depoId: string) {
-    return this.outcomeService.getImportTakenOutWagonsCount()
+  @ApiQuery({ name: 'filterType', required: false, enum: ['daily', 'monthly', 'yearly'] })
+  @Get('/planned/import-taken-out')
+  async getImportTakenOutWagonsCount(@UserDecorator('depoId') depoId: string, @Query('filterType') filterType?: 'daily' | 'monthly' | 'yearly') {
+    return this.outcomeService.getImportTakenOutWagonsCount(filterType)
   }
 
   @Get('/planned/taken-out')
@@ -37,10 +38,30 @@ export class OutcomeController {
     description: 'Optional owner type to filter wagons',
     enum: VagonOwnerType,
   })
+  @ApiQuery({
+    name: 'ownershipId',
+    required: false,
+    description: 'Optional ownership ID to filter results by a specific ownership entity.',
+    type: String,
+  })
   async getPlannedTakenOutStat(
     @Query('date') date?: string,
-    @Query('ownerType') ownerType?: VagonOwnerType
+    @Query('ownerType') ownerType?: VagonOwnerType,
+    @Query('ownershipId') ownershipId?: string,
   ) {
-    return this.outcomeService.getPlannedTakenOutStat({ date, ownerType });
+    return this.outcomeService.getPlannedTakenOutStat({ date, ownerType, ownershipId });
+  }
+
+  @ApiQuery({
+    name: 'date',
+    required: false,
+    description: 'Optional date to filter statistics (YYYY-MM-DD). Defaults to today if not provided.',
+    type: String,
+  })
+  @Get('current/taken-out/')
+  async getCurrentTakenOutWagons(
+    @Query('date') date?: string,
+  ){
+    return this.outcomeService.getCurrentTakenOutWagons({date});
   }
 }

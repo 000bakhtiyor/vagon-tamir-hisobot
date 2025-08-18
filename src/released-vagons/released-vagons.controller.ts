@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -14,6 +15,7 @@ import {
   ApiBody,
   ApiParam,
   ApiBearerAuth,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { ReleasedVagonsService } from './released-vagons.service';
 import { CreateReleasedVagonDto } from './dto/create-released-vagon.dto';
@@ -23,6 +25,7 @@ import { RolesEnum } from 'src/common/enums/role.enum';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { UserDecorator } from 'src/common/decorators/user.decorator';
+import { FindReleasedVagonsQueryDto } from './dto/find-released-vagon-query.dto';
 
 @ApiTags('Released Vagons [ALL]')
 @ApiBearerAuth()
@@ -44,8 +47,53 @@ export class ReleasedVagonsController {
   @Get()
   @Roles(RolesEnum.MODERATOR, RolesEnum.SUPERADMIN, RolesEnum.VIEWER)
   @ApiOperation({ summary: 'Get all released vagons [ALL]' })
-  async findAll(@UserDecorator('role') role: RolesEnum, @UserDecorator('depoId') depoId: string) {
-    return this.releasedVagonsService.findAll(role, depoId);
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    description: 'Page number for pagination',
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    description: 'Number of records per page',
+    type: Number,
+  })
+  async findAll(
+    @UserDecorator('role') role: RolesEnum, 
+    @UserDecorator('depoId') depoId: string, 
+    @Query('page') page: number, 
+    @Query('limit') limit: number,
+    @Query() query: FindReleasedVagonsQueryDto,
+  ) {
+    const {
+      wagonNumber,
+      wagonCode,
+      vagonType,
+      releaseDate,
+      ownerType,
+      repairClassificationId,
+      ownershipId,
+      stationId,
+      importedDate,
+      takenOutDate
+    } = query;
+    return this.releasedVagonsService.findAll(
+      role,
+      depoId,
+      page,
+      limit,
+      wagonNumber,
+      wagonCode,
+      vagonType,
+      releaseDate,
+      ownerType,
+      repairClassificationId,
+      ownershipId,
+      stationId,
+      importedDate,
+      takenOutDate
+    );
   }
 
   @Get(':id')

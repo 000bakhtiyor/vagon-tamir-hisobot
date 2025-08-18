@@ -34,7 +34,7 @@ export class StationsService {
     return this.stationRepository.save(station);
   }
 
-  async findAll(role: RolesEnum, depoId: string): Promise<{ id: string }[]> {
+  async findAll(role: RolesEnum, depoId: string, page: number, limit: number): Promise<{ id: string }[]> {
     const qb = this.stationRepository.createQueryBuilder('station')
 
     if (role !== RolesEnum.SUPERADMIN) {
@@ -42,6 +42,7 @@ export class StationsService {
         .where('depot.id = :depoId', { depoId });
     }
 
+    qb.skip((page - 1) * limit).take(limit);
     return qb.getMany();
   }
 

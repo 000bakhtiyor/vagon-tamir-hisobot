@@ -7,9 +7,10 @@ import {
   Param,
   Delete,
   NotFoundException,
-  UseGuards
+  UseGuards,
+  Query
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiParam, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiParam, ApiBody, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { StationsService } from './stations.service';
 import { CreateStationDto } from './dto/create-station.dto';
 import { UpdateStationDto } from './dto/update-station.dto';
@@ -34,11 +35,23 @@ export class StationsController {
     return this.stationService.create(createStationDto);
   }
 
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    description: 'Page number for pagination',
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    description: 'Number of records per page',
+    type: Number,
+  })
   @Get()
   @Roles(RolesEnum.SUPERADMIN, RolesEnum.MODERATOR)
   @ApiOperation({ summary: 'Get all stations' })
-  async findAll(@UserDecorator('role') role: RolesEnum, @UserDecorator('depoId') depoId: string) {
-    return this.stationService.findAll(role, depoId);
+  async findAll(@UserDecorator('role') role: RolesEnum, @UserDecorator('depoId') depoId: string, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return this.stationService.findAll(role, depoId, page, limit);
   }
 
   @Get(':id')

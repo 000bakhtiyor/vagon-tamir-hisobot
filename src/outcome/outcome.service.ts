@@ -2,16 +2,22 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { BaseResponseDto } from 'src/common/types/base-response.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { WagonDepot } from 'src/wagon-depots/entities/wagon-depot.entity';
-import { And, Equal, IsNull, Not, Repository } from 'typeorm';
+import { And, Between, Equal, IsNull, Not, Repository } from 'typeorm';
 import { Station } from 'src/stations/entities/station.entity';
 import { ReleasedVagon } from 'src/released-vagons/entities/released-vagon.entity';
 import { OperationType } from 'src/common/enums/operation-type.enum';
 import { VagonOwnerType } from 'src/common/enums/wagon-owner-type.enum';
 import { date } from 'joi';
+import { WagonRepairType } from 'src/common/enums/repair-type.enum';
 
+function normalizeDate(date: Date | string): string {
+  // Converts to yyyy-mm-dd string
+  return new Date(date).toISOString().split("T")[0];
+}
 class DepotVagonsDto {
   id: string;
   name: string;
+  stations?: any;
   vagons: { vagonNumber: number }[];
   countVagons: number;
 }
@@ -32,257 +38,392 @@ export class OutcomeService {
     private readonly releasedVagonRepository: Repository<ReleasedVagon>
   ) { }
 
-  async getPlannedReleaseWagons(releaseDate?: string, filterType?: 'daily' | 'monthly' | 'yearly'): Promise<BaseResponseDto<any>> {
+  // async getPlannedReleaseWagons(releaseDate?: string, filterType?: 'daily' | 'monthly' | 'yearly'): Promise<BaseResponseDto<any>> {
 
-    const query = this.releasedVagonRepository
-      .createQueryBuilder('wagon')
-      .leftJoinAndSelect('wagon.station', 'station')
-      .leftJoinAndSelect('station.wagonDepot', 'depot')
-      .where('wagon.operation = :operation', { operation: OperationType.Release });
+  //   const query = this.releasedVagonRepository
+  //     .createQueryBuilder('wagon')
+  //     .leftJoinAndSelect('wagon.station', 'station')
+  //     .leftJoinAndSelect('station.wagonDepot', 'depot')
+  //     .where('wagon.operation = :operation', { operation: OperationType.Release })
+  //     .where('wagon.repairType = :repairType', { repairType: WagonRepairType.PLANNED });
 
-    if (releaseDate) {
-      const dateObj = new Date(releaseDate);
-      const year = dateObj.getFullYear();
-      const month = dateObj.getMonth() + 1;
+  //   const dateObj = releaseDate ? new Date(releaseDate) : new Date();
+  //   const year = dateObj.getFullYear();
+  //   const month = dateObj.getMonth() + 1;
 
-      if (filterType === 'daily') {
-        query.andWhere('DATE(wagon.releaseDate) = :date', { date: releaseDate });
-      } else if (filterType === 'monthly') {
-        query.andWhere(
-          'EXTRACT(MONTH FROM wagon.releaseDate) = :month AND EXTRACT(YEAR FROM wagon.releaseDate) = :year',
-          { month, year },
-        );
-      } else if (filterType === 'yearly') {
-        query.andWhere('EXTRACT(YEAR FROM wagon.releaseDate) = :year', { year });
-      }
-    } else {
-      const dateObj = new Date();
-      const year = dateObj.getFullYear();
-      const month = dateObj.getMonth() + 1;
-      if (filterType === 'daily') {
-        query.andWhere('DATE(wagon.releaseDate) = :date', { date: releaseDate });
-      } else if (filterType === 'monthly') {
-        query.andWhere(
-          'EXTRACT(MONTH FROM wagon.releaseDate) = :month AND EXTRACT(YEAR FROM wagon.releaseDate) = :year',
-          { month, year },
-        );
-      } else if (filterType === 'yearly') {
-        query.andWhere('EXTRACT(YEAR FROM wagon.releaseDate) = :year', { year });
-      }
-    }
+  //   if (filterType === 'daily') {
+  //     query.andWhere('DATE(wagon.releaseDate) = :date', { date: releaseDate ?? dateObj });
+  //   } else if (filterType === 'monthly') {
+  //     query.andWhere(
+  //       'EXTRACT(MONTH FROM wagon.releaseDate) = :month AND EXTRACT(YEAR FROM wagon.releaseDate) = :year',
+  //       { month, year },
+  //     );
+  //   } else if (filterType === 'yearly') {
+  //     query.andWhere('EXTRACT(YEAR FROM wagon.releaseDate) = :year', { year });
+  //   }
 
-    const wagons = await query.getMany();
 
-    interface DepotData {
-      id: string;
-      name: string;
-      stations: Record<
-        string,
-        {
-          id: string;
-          name: string;
-          vagons: Omit<typeof wagons[number], 'station'>[];
-          countVagons: number;
-        }
-      >;
-      countVagons: number;
-    }
+  //   const wagons = await query.getMany();
+  //   console.log(wagons);
 
-    const result: Record<string, DepotData> = {};
+  //   interface DepotData {
+  //     id: string;
+  //     name: string;
+  //     stations: Record<
+  //       string,
+  //       {
+  //         id: string;
+  //         name: string;
+  //         vagons: Omit<typeof wagons[number], 'station'>[];
+  //         countVagons: number;
+  //       }
+  //     >;
+  //     countVagons: number;
+  //   }
 
-    wagons.forEach(wagon => {
-      const depotId = wagon.station.wagonDepot.id;
-      const depotName = wagon.station.wagonDepot.name;
+  //   const result: Record<string, DepotData> = {};
 
-      if (!result[depotId]) {
-        result[depotId] = {
-          id: depotId,
-          name: depotName,
-          stations: {},
-          countVagons: 0
-        };
-      }
+  //   wagons.forEach(wagon => {
+  //     const depotId = wagon.station.wagonDepot.id;
+  //     const depotName = wagon.station.wagonDepot.name;
 
-      const stationId = wagon.station.id;
-      const stationName = wagon.station.name;
+  //     if (!result[depotId]) {
+  //       result[depotId] = {
+  //         id: depotId,
+  //         name: depotName,
+  //         stations: {},
+  //         countVagons: 0
+  //       };
+  //     }
 
-      if (!result[depotId].stations[stationId]) {
-        result[depotId].stations[stationId] = {
-          id: stationId,
-          name: stationName,
-          vagons: [],
-          countVagons: 0
-        };
-      }
+  //     const stationId = wagon.station.id;
+  //     const stationName = wagon.station.name;
 
-      const { station, ...wagonData } = wagon;
+  //     if (!result[depotId].stations[stationId]) {
+  //       result[depotId].stations[stationId] = {
+  //         id: stationId,
+  //         name: stationName,
+  //         vagons: [],
+  //         countVagons: 0
+  //       };
+  //     }
 
-      result[depotId].stations[stationId].vagons.push(wagonData);
-      result[depotId].stations[stationId].countVagons++;
-      result[depotId].countVagons++;
-    });
+  //     const { station, ...wagonData } = wagon;
 
-    const depotsFormatted = Object.values(result).map(depot => ({
-      id: depot.id,
-      name: depot.name,
-      countVagons: depot.countVagons,
-      stations: Object.values(depot.stations)
-    }));
+  //     result[depotId].stations[stationId].vagons.push(wagonData);
+  //     result[depotId].stations[stationId].countVagons++;
+  //     result[depotId].countVagons++;
+  //   });
 
-    return new BaseResponseDto(
-      depotsFormatted,
-      'Planned release wagons retrieved',
-      200
-    );
-  }
+  //   const depotsFormatted = Object.values(result).map(depot => ({
+  //     id: depot.id,
+  //     name: depot.name,
+  //     countVagons: depot.countVagons,
+  //     stations: Object.values(depot.stations)
+  //   }));
 
-  async getImportTakenOutWagonsCount(): Promise<BaseResponseDto<any>> {
+  //   return new BaseResponseDto(
+  //     depotsFormatted,
+  //     'Planned release wagons retrieved',
+  //     200
+  //   );
+  // }
+
+  async getPlannedReleaseWagons(
+    releaseDate?: string,
+    filterType?: 'daily' | 'monthly' | 'yearly',
+    start?: string | Date,
+    end?: string | Date
+  ): Promise<BaseResponseDto<ReleaseWagonsResponse>> {
     const depots = await this.depotRepository.find({
       relations: ['stations', 'stations.releasedVagons'],
     });
 
     let allVagonsCount = 0;
-    let allImportedCount = 0;
-    let allExportedCount = 0;
+    const depos: Record<string, DepotVagonsDto> = {};
 
-    const depos = {};
+    let startDate: string | null = start ? normalizeDate(start) : null;
+    let endDate: string | null = end ? normalizeDate(end) : null;
 
-    for (const depot of depots) {
-      const vagons = depot.stations.flatMap(station => station.releasedVagons);
+    if (!startDate || !endDate) {
+      const targetDate = new Date();
 
-      const importedCount = vagons.filter(v => v.importedDate != null).length;
-      const exportedCount = vagons.filter(v => v.takenOutDate != null).length;
+      const dayStart = normalizeDate(new Date(targetDate));
+      const dayEnd = normalizeDate(new Date(targetDate.setDate(targetDate.getDate() + 1)));
 
-      allVagonsCount += vagons.length;
-      allImportedCount += importedCount;
-      allExportedCount += exportedCount;
+      const monthStart = normalizeDate(new Date(targetDate.getFullYear(), targetDate.getMonth(), 1));
+      const monthEnd = normalizeDate(new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 1));
 
-      depos[depot.name] = {
-        ...depot,
-        vagons: vagons.map(v => ({
-          vagonNumber: v.vagonNumber,
-          importedDate: v.importedDate,
-          takenOutDate: v.takenOutDate,
-        })),
-        countVagons: vagons.length,
-        importedCount,
-        exportedCount,
-      };
+      const yearStart = normalizeDate(new Date(targetDate.getFullYear(), 0, 1));
+      const yearEnd = normalizeDate(new Date(targetDate.getFullYear() + 1, 0, 1));
 
-      delete depos[depot.name].stations;
+      switch (filterType) {
+        case 'daily':
+          startDate = dayStart;
+          endDate = dayEnd;
+          break;
+        case 'monthly':
+          startDate = monthStart;
+          endDate = monthEnd;
+          break;
+        case 'yearly':
+          startDate = yearStart;
+          endDate = yearEnd;
+          break;
+      }
     }
 
-    return new BaseResponseDto(
-      { depos, AllVagonsCount: allVagonsCount, AllImportedCount: allImportedCount, AllExportedCount: allExportedCount },
-      "Planned release wagons with counts retrieved",
+    for (const depot of depots) {
+      const vagons: ReleasedVagon[] = depot.stations.flatMap(station => station.releasedVagons);
+
+      let filteredVagons: ReleasedVagon[] = vagons.filter(v => v.operation === OperationType.Release && v.repairType === WagonRepairType.PLANNED);
+
+      if (startDate && endDate) {
+        filteredVagons = filteredVagons.filter(v => {
+          if (!v.releaseDate) return false;
+          const d = normalizeDate(v.releaseDate);
+          return d >= startDate && d < endDate; 
+        });
+      }
+      else {
+        filteredVagons = filteredVagons.filter(v => v.releaseDate != null);
+      }
+      allVagonsCount += filteredVagons.length;
+      depos[depot.name] = {
+        id: depot.id,
+        name: depot.name,
+        vagons: filteredVagons.map(v => ({ vagonNumber: v.vagonNumber })),
+        countVagons: filteredVagons.length,
+      };
+      delete depos[depot.name].stations;
+    }
+    return new BaseResponseDto<ReleaseWagonsResponse>(
+      {
+        depos,
+        allVagonsCount,
+      },
+      "Planned release wagons retrieved",
       200
     );
   }
 
-  async getPlannedTakenOutStat(query: { date?: string, ownerType?: VagonOwnerType }) {
+
+async getImportTakenOutWagonsCount(
+  filterType ?: 'daily' | 'monthly' | 'yearly',
+  start ?: string | Date,
+  end ?: string | Date
+): Promise < BaseResponseDto < any >> {
+  const depots = await this.depotRepository.find({
+    relations: ['stations', 'stations.releasedVagons'],
+  });
+
+  let allVagonsCount = 0;
+  let allImportedCount = 0;
+  let allExportedCount = 0;
+
+  const depos = {};
+
+  // if explicit start/end provided
+  let startDate: string | null = start? normalizeDate(start): null;
+  let endDate: string | null = end? normalizeDate(end): null;
+
+  if(!startDate || !endDate) {
+  const targetDate = new Date();
+
+  const dayStart = normalizeDate(new Date(targetDate));
+  const dayEnd = normalizeDate(new Date(targetDate.setDate(targetDate.getDate() + 1)));
+
+  const monthStart = normalizeDate(new Date(targetDate.getFullYear(), targetDate.getMonth(), 1));
+  const monthEnd = normalizeDate(new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 1));
+
+  const yearStart = normalizeDate(new Date(targetDate.getFullYear(), 0, 1));
+  const yearEnd = normalizeDate(new Date(targetDate.getFullYear() + 1, 0, 1));
+
+  switch (filterType) {
+    case 'daily':
+      startDate = dayStart;
+      endDate = dayEnd;
+      break;
+    case 'monthly':
+      startDate = monthStart;
+      endDate = monthEnd;
+      break;
+    case 'yearly':
+      startDate = yearStart;
+      endDate = yearEnd;
+      break;
+  }
+}
+
+for (const depot of depots) {
+  const vagons = depot.stations.flatMap(station => station.releasedVagons);
+
+  let importedCount = 0;
+  let exportedCount = 0;
+
+  if (startDate && endDate) {
+    importedCount = vagons.filter(v => {
+      if (!v.importedDate) return false;
+      const d = normalizeDate(v.importedDate);
+      return d >= startDate && d < endDate;
+    }).length;
+
+    exportedCount = vagons.filter(v => {
+      if (!v.takenOutDate) return false;
+      const d = normalizeDate(v.takenOutDate);
+      return d >= startDate && d < endDate;
+    }).length;
+  } else {
+    importedCount = vagons.filter(v => v.importedDate != null).length;
+    exportedCount = vagons.filter(v => v.takenOutDate != null).length;
+  }
+
+  allVagonsCount += vagons.length;
+  allImportedCount += importedCount;
+  allExportedCount += exportedCount;
+
+  depos[depot.name] = {
+    ...depot,
+    countVagons: vagons.length,
+    importedCount,
+    exportedCount,
+  };
+
+  delete depos[depot.name].stations;
+}
+
+return new BaseResponseDto(
+  {
+    depos,
+    AllVagonsCount: allVagonsCount,
+    AllImportedCount: allImportedCount,
+    AllExportedCount: allExportedCount,
+  },
+  "Planned release wagons with counts retrieved",
+  200
+);
+}
+
+
+
+  async getPlannedTakenOutStat(query: { date?: string; ownerType?: VagonOwnerType; ownershipId?: string, filterType?: 'daily' | 'monthly' | 'yearly' }) {
     const targetDate = query.date ? new Date(query.date) : new Date();
-    const day = targetDate.toISOString().split('T')[0];
-    const month = targetDate.getMonth() + 1;
-    const year = targetDate.getFullYear();
 
-    const depots = await this.depotRepository
-      .createQueryBuilder('depot')
-      .leftJoinAndSelect('depot.stations', 'station')
-      .leftJoinAndSelect('station.releasedVagons', 'vagon')
-      .where('vagon.takenOutDate IS NOT NULL AND DATE(vagon.takenOutDate) = :day', { day })
-      .getMany();
+    const dayStart = new Date(targetDate);
+    dayStart.setHours(0, 0, 0, 0);
 
-    const dailyDepotCounts = await this.depotRepository
-      .createQueryBuilder('depot')
-      .leftJoin('depot.stations', 'station')
-      .leftJoin('station.releasedVagons', 'vagon')
-      .select('depot.id', 'depotId')
-      .addSelect('COUNT(vagon.id)', 'dailyCount')
-      .where('vagon.takenOutDate IS NOT NULL AND DATE(vagon.takenOutDate) = :day', { day })
-      .groupBy('depot.id')
-      .getRawMany();
+    const dayEnd = new Date(dayStart);
+    dayEnd.setDate(dayEnd.getDate() + 1);
 
-    let dailyDepotCountsByOwnerType: any;
-    const owner = query.ownerType
-    if (owner) {
-      dailyDepotCountsByOwnerType = await this.depotRepository
-        .createQueryBuilder('depot')
-        .leftJoin('depot.stations', 'station')
-        .leftJoin('station.releasedVagons', 'vagon')
-        .select('depot.id', 'depotId')
-        .addSelect('COUNT(vagon.id)', 'dailyCount')
-        .where('vagon.takenOutDate IS NOT NULL AND DATE(vagon.takenOutDate) = :day AND vagon.ownerType = :owner', { day, owner })
-        .groupBy('depot.id')
-        .getRawMany();
-    }
+    const monthStart = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1);
+    const monthEnd = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 1);
 
-    const monthlyDepotCounts = await this.depotRepository
+    const yearStart = new Date(targetDate.getFullYear(), 0, 1);
+    const yearEnd = new Date(targetDate.getFullYear() + 1, 0, 1);
+
+    const depotStats = await this.depotRepository
       .createQueryBuilder('depot')
       .leftJoin('depot.stations', 'station')
       .leftJoin('station.releasedVagons', 'vagon')
+      .leftJoin('vagon.ownership', 'ownership')
       .select('depot.id', 'depotId')
-      .addSelect('COUNT(vagon.id)', 'monthlyCount')
-      .where('vagon.takenOutDate IS NOT NULL AND EXTRACT(MONTH FROM vagon.takenOutDate) = :month AND EXTRACT(YEAR FROM vagon.takenOutDate) = :year', { month, year })
+      .where('vagon.operation = :operation', { operation: OperationType.TakeOut })
+      .andWhere('vagon.repairType = :repairType', { repairType: WagonRepairType.PLANNED })
+      .where('vagon.takenOutDate IS NOT NULL')
+      .addSelect(
+        `COUNT(*) FILTER (
+        WHERE vagon."takenOutDate" >= :dayStart AND vagon."takenOutDate" < :dayEnd
+        ${query.ownershipId ? 'AND ownership.id = :ownershipId' : ''}
+      )`,
+        'dailyCount'
+      )
+      .addSelect(
+        `COUNT(*) FILTER (
+        WHERE vagon."takenOutDate" >= :monthStart AND vagon."takenOutDate" < :monthEnd
+        ${query.ownershipId ? 'AND ownership.id = :ownershipId' : ''}
+      )`,
+        'monthlyCount'
+      )
+      .addSelect(
+        `COUNT(*) FILTER (
+        WHERE vagon."takenOutDate" >= :yearStart AND vagon."takenOutDate" < :yearEnd
+        ${query.ownershipId ? 'AND ownership.id = :ownershipId' : ''}
+      )`,
+        'yearlyCount'
+      )
+      .addSelect(
+        `COUNT(*) FILTER (
+        WHERE vagon."takenOutDate" >= :dayStart AND vagon."takenOutDate" < :dayEnd
+        AND vagon."ownerType" = :ownerType
+        ${query.ownershipId ? 'AND ownership.id = :ownershipId' : ''}
+      )`,
+        'dailyOwnerTypeCount'
+      )
+      .addSelect(
+        `COUNT(*) FILTER (
+        WHERE vagon."takenOutDate" >= :monthStart AND vagon."takenOutDate" < :monthEnd
+        AND vagon."ownerType" = :ownerType
+        ${query.ownershipId ? 'AND ownership.id = :ownershipId' : ''}
+      )`,
+        'monthlyOwnerTypeCount'
+      )
+      .addSelect(
+        `COUNT(*) FILTER (
+        WHERE vagon."takenOutDate" >= :yearStart AND vagon."takenOutDate" < :yearEnd
+        AND vagon."ownerType" = :ownerType
+        ${query.ownershipId ? 'AND ownership.id = :ownershipId' : ''}
+      )`,
+        'yearlyOwnerTypeCount'
+      )
       .groupBy('depot.id')
+      .setParameters({
+        dayStart,
+        dayEnd,
+        monthStart,
+        monthEnd,
+        yearStart,
+        yearEnd,
+        ownerType: query.ownerType || null,
+        ownershipId: query.ownershipId || null,
+      })
       .getRawMany();
 
-    const yearlyDepotCounts = await this.depotRepository
-      .createQueryBuilder('depot')
-      .leftJoin('depot.stations', 'station')
-      .leftJoin('station.releasedVagons', 'vagon')
-      .select('depot.id', 'depotId')
-      .addSelect('COUNT(vagon.id)', 'yearlyCount')
-      .where('vagon.takenOutDate IS NOT NULL AND EXTRACT(YEAR FROM vagon.takenOutDate) = :year', { year })
-      .groupBy('depot.id')
-      .getRawMany();
+    const depots = await this.depotRepository.find({
+      where: { stations: { releasedVagons: { takenOutDate: Not(IsNull()) } } },
+      relations: ['stations', 'stations.releasedVagons', 'stations.releasedVagons.ownership'],
+    });
+
+    const statsMap = new Map(depotStats.map(stat => [stat.depotId, stat]));
 
     const depotsWithCounts = depots.map(depot => {
-      const daily = dailyDepotCounts.find(dc => dc.depotId === depot.id);
-      const monthly = monthlyDepotCounts.find(dc => dc.depotId === depot.id);
-      const yearly = yearlyDepotCounts.find(dc => dc.depotId === depot.id);
-      const dailyOwnerType = dailyDepotCountsByOwnerType.find(dc => dc.depotId === depot.id);
-      console.log(dailyOwnerType)
+      const filteredStations = depot.stations.map(station => ({
+        ...station,
+        releasedVagons: query.ownershipId
+          ? station.releasedVagons.filter(v => v.ownership?.id === query.ownershipId)
+          : station.releasedVagons
+      }));
+
+      const stat = statsMap.get(depot.id) || {};
       return {
         ...depot,
+        stations: filteredStations,
         daily: {
-          count: Number(daily?.dailyCount || 0),
+          count: Number(stat.dailyCount || 0),
           ownerType: {
-            name: query.ownerType,
-            ownerTypeCount: Number(dailyOwnerType?.dailyCount || 0),
-          }
+            name: query.ownerType || '',
+            dailyCount: Number(stat.dailyOwnerTypeCount || 0),
+            monthlyCount: Number(stat.monthlyOwnerTypeCount || 0),
+            yearlyCount: Number(stat.yearlyOwnerTypeCount || 0),
+          },
         },
-        monthlyCount: Number(monthly?.monthlyCount || 0),
-        yearlyCount: Number(yearly?.yearlyCount || 0),
+        monthlyCount: Number(stat.monthlyCount || 0),
+        yearlyCount: Number(stat.yearlyCount || 0),
       };
     });
 
-
-    const totalDailyRaw = await this.depotRepository
-      .createQueryBuilder('depot')
-      .leftJoin('depot.stations', 'station')
-      .leftJoin('station.releasedVagons', 'vagon')
-      .select('COUNT(vagon.id)', 'count')
-      .where('vagon.takenOutDate IS NOT NULL AND DATE(vagon.takenOutDate) = :day', { day })
-      .getRawOne();
-    const totalDailyCount = Number(totalDailyRaw.count);
-
-    const totalMonthlyRaw = await this.depotRepository
-      .createQueryBuilder('depot')
-      .leftJoin('depot.stations', 'station')
-      .leftJoin('station.releasedVagons', 'vagon')
-      .select('COUNT(vagon.id)', 'count')
-      .where('vagon.takenOutDate IS NOT NULL AND EXTRACT(MONTH FROM vagon.takenOutDate) = :month AND EXTRACT(YEAR FROM vagon.takenOutDate) = :year', { month, year })
-      .getRawOne();
-    const totalMonthlyCount = Number(totalMonthlyRaw.count);
-
-    const totalYearlyRaw = await this.depotRepository
-      .createQueryBuilder('depot')
-      .leftJoin('depot.stations', 'station')
-      .leftJoin('station.releasedVagons', 'vagon')
-      .select('COUNT(vagon.id)', 'count')
-      .where('vagon.takenOutDate IS NOT NULL AND EXTRACT(YEAR FROM vagon.takenOutDate) = :year', { year })
-      .getRawOne();
-    const totalYearlyCount = Number(totalYearlyRaw.count);
+    const totalDailyCount = depotStats.reduce((sum, s) => sum + Number(s.dailyCount || 0), 0);
+    const totalMonthlyCount = depotStats.reduce((sum, s) => sum + Number(s.monthlyCount || 0), 0);
+    const totalYearlyCount = depotStats.reduce((sum, s) => sum + Number(s.yearlyCount || 0), 0);
 
     return {
       depots: depotsWithCounts,
@@ -293,6 +434,95 @@ export class OutcomeService {
   }
 
 
+  async getCurrentTakenOutWagons(query: {date?: string;}){
+    const targetDate = query.date ? new Date(query.date) : new Date();
 
+    const dayStart = new Date(targetDate);
+    dayStart.setHours(0, 0, 0, 0);
+
+    const dayEnd = new Date(dayStart);
+    dayEnd.setDate(dayEnd.getDate() + 1);
+
+    const monthStart = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1);
+    const monthEnd = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 1);
+
+    const yearStart = new Date(targetDate.getFullYear(), 0, 1);
+    const yearEnd = new Date(targetDate.getFullYear() + 1, 0, 1);
+
+    const depotStats = await this.depotRepository
+      .createQueryBuilder('depot')
+      .leftJoin('depot.stations', 'station')
+      .leftJoin('station.releasedVagons', 'vagon')
+      .leftJoin('vagon.ownership', 'ownership')
+      .select('depot.id', 'depotId')
+      .where('vagon.repairType = :repairType', { repairType: WagonRepairType.CURRENT })
+      .where('vagon.operation = :operation', { operation: OperationType.TakeOut })
+      .addSelect(
+        `COUNT(*) FILTER (
+        WHERE vagon."takenOutDate" >= :dayStart AND vagon."takenOutDate" < :dayEnd
+      )`,
+        'dailyCount'
+      )
+      .addSelect(
+        `COUNT(*) FILTER (
+        WHERE vagon."takenOutDate" >= :monthStart AND vagon."takenOutDate" < :monthEnd
+      )`,
+        'monthlyCount'
+      )
+      .addSelect(
+        `COUNT(*) FILTER (
+        WHERE vagon."takenOutDate" >= :yearStart AND vagon."takenOutDate" < :yearEnd
+      )`,
+        'yearlyCount'
+      )
+      .groupBy('depot.id')
+      .setParameters({
+        dayStart,
+        dayEnd,
+        monthStart,
+        monthEnd,
+        yearStart,
+        yearEnd,
+        ownerType: null,
+      })
+      .getRawMany();
+
+    const depots = await this.depotRepository.find({
+      where: { stations: { releasedVagons: { operation: OperationType.TakeOut } } },
+      relations: [
+        'stations', 
+        'stations.releasedVagons', 
+        'stations.releasedVagons.ownership', 
+        'stations.releasedVagons.repairClassification', 
+        'stations.releasedVagons.ownership',
+      ],
+    });
+
+    const statsMap = new Map(depotStats.map(stat => [stat.depotId, stat]));
+
+    const depotsWithCounts = depots.map(depot => {
+      const filteredStations = depot.stations.map(station => ({
+        ...station,
+        releasedVagons: station.releasedVagons.filter(v => v.repairType === WagonRepairType.CURRENT)
+      }));
+
+      const stat = statsMap.get(depot.id) || {};
+      return {
+        ...depot,
+        stations: filteredStations,
+      };
+    });
+
+    const totalDailyCount = depotStats.reduce((sum, s) => sum + Number(s.dailyCount || 0), 0);
+    const totalMonthlyCount = depotStats.reduce((sum, s) => sum + Number(s.monthlyCount || 0), 0);
+    const totalYearlyCount = depotStats.reduce((sum, s) => sum + Number(s.yearlyCount || 0), 0);
+
+    return {
+      depots: depotsWithCounts,
+      totalDailyCount,
+      totalMonthlyCount,
+      totalYearlyCount,
+    };
+  }
 
 }

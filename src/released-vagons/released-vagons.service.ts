@@ -73,8 +73,8 @@ export class ReleasedVagonsService {
     const newVagon = this.releasedVagonsRepository.create({
       ...createReleasedVagonDto,
       releaseDate: createReleasedVagonDto.releaseDate ?? new Date(),
-      importedDate: createReleasedVagonDto.importedDate ?? new Date(),
-      takenOutDate: createReleasedVagonDto.takenOutDate ?? new Date(),
+      importedDate: createReleasedVagonDto.importedDate,
+      takenOutDate: createReleasedVagonDto.takenOutDate,
       station: existingStation,
       repairClassification: existingClassification,
       ownership: existingOwnerShip,
@@ -92,24 +92,75 @@ export class ReleasedVagonsService {
 
   async findAll(
     role: RolesEnum,
-    depoId: string
+    depoId: string,
+    page: number = 1,
+    limit: number = 10,
+    wagonCode?: string,
+    wagonNumber?: string,
+    vagonType?: string,
+    releaseDate?: string,
+    ownerType?: string,
+    repairClassificationId?: string,
+    ownershipId?: string,
+    stationId?: string,
+    importedDate?: string,
+    takenOutDate?: string,
   ): Promise<BaseResponseDto<ReleasedVagon[]>> {
-    const whereCondition =
-      role === RolesEnum.MODERATOR
-        ? { station: { wagonDepot: { id: depoId } } }
-        : {};
+    const qb = this.releasedVagonsRepository.createQueryBuilder('v')
+      .leftJoinAndSelect('v.station', 'station')
+      .leftJoinAndSelect('station.wagonDepot', 'depot')
+      .leftJoinAndSelect('v.repairClassification', 'repairClassification')
+      .leftJoinAndSelect('v.ownership', 'ownership')
+      .orderBy('v.releaseDate', 'DESC')
+      .skip((page - 1) * limit)
+      .take(limit);
 
-    const vagons = await this.releasedVagonsRepository.find({
-      where: whereCondition,
-      relations: ['station', 'station.wagonDepot', 'repairClassification', 'ownership'],
-    });
+    if (role === RolesEnum.MODERATOR) {
+      qb.andWhere('depot.id = :depoId', { depoId });
+    }
+
+    if (wagonCode) {
+      qb.andWhere('v.wagonCode ILIKE :wagonCode', { wagonCode: `%${wagonCode}%` });
+    }
+    if (wagonNumber !== undefined) {
+      qb.andWhere('CAST(v.wagonNumber AS TEXT) ILIKE :wagonNumber', {
+        wagonNumber: `%${wagonNumber.toString()}%`
+      });
+    }
+    if (vagonType) {
+      qb.andWhere('v.vagonType = :vagonType', { vagonType });
+    }
+    if (releaseDate) {
+      qb.andWhere('DATE(v.releaseDate) = :releaseDate', { releaseDate });
+    }
+    if (ownerType) {
+      qb.andWhere('v.ownerType = :ownerType', { ownerType });
+    }
+    if (repairClassificationId) {
+      qb.andWhere('repairClassification.id = :repairClassificationId', { repairClassificationId });
+    }
+    if (ownershipId) {
+      qb.andWhere('ownership.id = :ownershipId', { ownershipId });
+    }
+    if (stationId) {
+      qb.andWhere('station.id = :stationId', { stationId });
+    }
+    if (importedDate) {
+      qb.andWhere('DATE(v.importedDate) = :importedDate', { importedDate });
+    }
+    if (takenOutDate) {
+      qb.andWhere('DATE(v.takenOutDate) = :takenOutDate', { takenOutDate });
+    }
+
+    const vagons = await qb.getMany();
 
     return new BaseResponseDto<ReleasedVagon[]>(
       vagons,
       'Released vagons retrieved successfully',
-      200
+      200,
     );
   }
+
 
 
   async findOne(id: string): Promise<BaseResponseDto<ReleasedVagon>> {

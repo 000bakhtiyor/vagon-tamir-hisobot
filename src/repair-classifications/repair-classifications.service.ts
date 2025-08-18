@@ -25,13 +25,14 @@ export class RepairClassificationsService {
     return new BaseResponseDto(saved, 'Repair classification created', 201);
   }
 
-  async findAll(code?: number): Promise<BaseResponseDto<RepairClassification[]>> {
+  async findAll(code?: number, page: number=1, limit: number=10): Promise<BaseResponseDto<RepairClassification[]>> {
     const query = this.repo.createQueryBuilder('rc');
 
     if (code !== undefined) {
       query.where('CAST(rc.code AS TEXT) LIKE :code', { code: `%${code}%` });
     }
 
+    query.skip((page - 1) * limit).take(limit);
     const list = await query.getMany();
 
     return new BaseResponseDto(list, 'Repair classifications retrieved', 200);

@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
 import { OwnershipsService } from './ownerships.service';
 import { CreateOwnershipDto } from './dto/create-ownership.dto';
 import { UpdateOwnershipDto } from './dto/update-ownership.dto';
-import { ApiTags, ApiOperation, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiParam, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
@@ -21,12 +21,24 @@ export class OwnershipsController {
   async create(@Body() createOwnershipDto: CreateOwnershipDto) {
     return this.ownershipsService.create(createOwnershipDto);
   }
-
+  
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    description: 'Page number for pagination',
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    description: 'Number of records per page',
+    type: Number,
+  })
   @Get()
   @Roles(RolesEnum.SUPERADMIN, RolesEnum.MODERATOR)
   @ApiOperation({ summary: 'Get all ownerships' })
-  async findAll() {
-    return this.ownershipsService.findAll();
+  async findAll(@Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return this.ownershipsService.findAll(page, limit);
   }
 
   @Get(':id')
