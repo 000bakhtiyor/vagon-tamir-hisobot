@@ -4,12 +4,19 @@ import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swag
 import { User } from 'src/users/entities/user.entity';
 import { UserDecorator } from 'src/common/decorators/user.decorator';
 import { VagonOwnerType } from 'src/common/enums/wagon-owner-type.enum';
+import { WagonType } from 'src/common/enums/wagom-type.enum';
 
 // @ApiBearerAuth()
 // @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('outcome')
 export class OutcomeController {
   constructor(private readonly outcomeService: OutcomeService) {}
+
+  @Get('current/imported/')
+  @ApiOperation({ summary: 'Get current imported wagons statistics' })
+  async getCurrentImportedWagons(){
+    return this.outcomeService.getCurrentImportedWagons();
+  }
 
   @ApiQuery({ name: 'filterType', required: false, enum: ['daily', 'monthly', 'yearly'] })
   @ApiQuery({ name: 'releaseDate', required: false, type: String, description: 'Date in format YYYY-MM-DD' })
@@ -39,6 +46,12 @@ export class OutcomeController {
     enum: VagonOwnerType,
   })
   @ApiQuery({
+    name: 'vagonType',
+    required: false,
+    description: 'Optional owner type to filter wagons',
+    enum: WagonType,
+  })
+  @ApiQuery({
     name: 'ownershipId',
     required: false,
     description: 'Optional ownership ID to filter results by a specific ownership entity.',
@@ -48,8 +61,9 @@ export class OutcomeController {
     @Query('date') date?: string,
     @Query('ownerType') ownerType?: VagonOwnerType,
     @Query('ownershipId') ownershipId?: string,
+    @Query('vagonType') vagonType?: WagonType,
   ) {
-    return this.outcomeService.getPlannedTakenOutStat({ date, ownerType, ownershipId });
+    return this.outcomeService.getPlannedTakenOutStat({ date, ownerType, ownershipId, vagonType });
   }
 
   @ApiQuery({
@@ -64,4 +78,17 @@ export class OutcomeController {
   ){
     return this.outcomeService.getCurrentTakenOutWagons({date});
   }
+
+  @Get('current/released/')
+  @ApiOperation({ summary: 'Get current released wagons statistics' })
+  @ApiQuery({
+    name: 'groupId',
+    required: false,
+    description: 'Optional group ID to filter results by a specific repair classification group.',
+    type: String,
+  })
+  async getCurrentReleasedWagons(@Query('groupId') groupId?: string) {
+    return this.outcomeService.getCurrentReleasedWagons(groupId);
+  }
+
 }

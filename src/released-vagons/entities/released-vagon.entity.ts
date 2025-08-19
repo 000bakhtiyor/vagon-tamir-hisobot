@@ -27,7 +27,7 @@ export class ReleasedVagon {
     })
     vagonType: WagonType;
 
-    @Column({ type: 'date', nullable: false, default: () => 'CURRENT_TIMESTAMP' })
+    @Column({ type: 'date', nullable: false })
     releaseDate: Date;
 
     @Column({

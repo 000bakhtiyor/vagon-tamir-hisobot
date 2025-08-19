@@ -25,7 +25,7 @@ export class TakeOutVagonsService {
         }
 
         const takenOutDate = takenOutWagonDto.takenOutDate ?? new Date();
-        if (existingWagon.importedDate && takenOutDate <= existingWagon.importedDate) {
+        if (existingWagon.importedDate && takenOutDate < existingWagon.importedDate) {
             throw new BadRequestException('Taken out date must be later than imported date');
         }
 

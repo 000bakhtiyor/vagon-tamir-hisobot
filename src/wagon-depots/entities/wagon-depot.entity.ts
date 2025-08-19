@@ -1,3 +1,4 @@
+import { CreateWagon } from "src/create-wagons/entities/create-wagon.entity";
 import { Station } from "src/stations/entities/station.entity";
 import { User } from "src/users/entities/user.entity";
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
@@ -17,4 +18,8 @@ export class WagonDepot {
 
     @OneToMany(() => Station, (station) => station.wagonDepot)
     stations: Station[];
+
+    @OneToMany(() => CreateWagon, (createWagon) => createWagon.wagonDepot)
+    @JoinColumn()
+    createWagons: CreateWagon[];
 }

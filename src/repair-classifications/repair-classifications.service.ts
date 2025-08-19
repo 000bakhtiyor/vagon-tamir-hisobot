@@ -1,18 +1,48 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { RepairClassification } from './entities/repair-classification.entity';
 import { CreateRepairClassificationDto } from './dto/create-repair-classification.dto';
 import { UpdateRepairClassificationDto } from './dto/update-repair-classification.dto';
 import { BaseResponseDto } from 'src/common/types/base-response.dto';
+import { CreateRepairClassificationGroupDto } from './dto/create-rp-group.dto';
+import { RepairClassificationGroup } from './entities/repair-classification-group.entity';
 
 @Injectable()
 export class RepairClassificationsService {
   constructor(
     @InjectRepository(RepairClassification)
     private readonly repo: Repository<RepairClassification>,
+    @InjectRepository(RepairClassificationGroup)
+    private readonly groupRepo: Repository<RepairClassificationGroup>,
   ) { }
 
+  async createGroupWithRps(dto: CreateRepairClassificationGroupDto) {
+    const group = this.groupRepo.create({ name: dto.name });
+    await this.groupRepo.save(group);
+
+    if (dto.rpIds?.length > 0) {
+      const rps = await this.repo.findBy({ id: In(dto.rpIds) });
+      if (rps.length !== dto.rpIds.length) {
+        throw new NotFoundException('Some RP IDs were not found');
+      }
+
+      rps.forEach(rp => (rp.group = group));
+      await this.repo.save(rps);
+    }
+
+    return this.groupRepo.findOne({
+      where: { id: group.id },
+      relations: ['classifications'],
+    });
+  }
+
+
+  async findAllGroups(): Promise<BaseResponseDto<RepairClassificationGroup[]>> {
+    const groups = await this.groupRepo.find({ relations: ['classifications'] });
+    return new BaseResponseDto(groups, 'Repair classification groups retrieved', 200);
+  } 
+  
   async create(dto: CreateRepairClassificationDto): Promise<BaseResponseDto<RepairClassification>> {
     const existingClassification = await this.repo.findOneBy({
       code: dto.code

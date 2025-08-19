@@ -1,4 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
     IsBoolean,
     IsISO8601,
@@ -70,7 +71,9 @@ export class CreateReleasedVagonDto {
         example: '2025-08-13',
     })
     @IsDate()
-    releaseDate: Date;
+    @Type(() => Date)
+    @IsOptional()
+    releaseDate?: Date;
 
     @ApiProperty({
         description: 'The date when the vagon was imported.',
@@ -81,6 +84,7 @@ export class CreateReleasedVagonDto {
     })
     @IsOptional()
     @IsDate()
+    @Type(() => Date)
     importedDate?: Date;
 
     @ApiProperty({
@@ -92,6 +96,7 @@ export class CreateReleasedVagonDto {
     })
     @IsOptional()
     @IsDate()
+    @Type(() => Date)
     takenOutDate?: Date;
 
     @ApiProperty({

@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiParam, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiParam, ApiQuery, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 import { RepairClassificationsService } from './repair-classifications.service';
 import { CreateRepairClassificationDto } from './dto/create-repair-classification.dto';
 import { UpdateRepairClassificationDto } from './dto/update-repair-classification.dto';
@@ -7,18 +7,35 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { RolesEnum } from 'src/common/enums/role.enum';
+import { CreateRepairClassificationGroupDto } from './dto/create-rp-group.dto';
 
 @ApiTags('Repair Classifications [superadmin]')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('repair-classifications')
 export class RepairClassificationsController {
+
   constructor(private readonly service: RepairClassificationsService) { }
+  
+  @Post('/repair-group')
+  @Roles(RolesEnum.SUPERADMIN, RolesEnum.MODERATOR)
+  @ApiOperation({ summary: 'Repair classifications by group' })
+  async createGroup(@Body() dto: CreateRepairClassificationGroupDto) {
+    return this.service.createGroupWithRps(dto);
+  }
+
+  @Get('/repair-group')
+  @Roles(RolesEnum.SUPERADMIN, RolesEnum.MODERATOR)
+  @ApiOperation({ summary: 'Get all repair classification groups' })
+  async findAllGroups() {
+    return this.service.findAllGroups();
+  }
 
   @Post()
   @Roles(RolesEnum.SUPERADMIN)
   @ApiOperation({ summary: 'Create a new repair classification' })
   async create(@Body() dto: CreateRepairClassificationDto) {
+    console.log(dto);
     return this.service.create(dto);
   }
 
@@ -50,6 +67,7 @@ export class RepairClassificationsController {
   ) {
     return this.service.findAll(code, page, limit);
   }
+
 
 
   @Get(':id')

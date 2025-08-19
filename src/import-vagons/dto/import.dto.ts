@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Type } from "class-transformer";
 import { IsDate, IsOptional, IsString } from "class-validator";
 
 export class ImportWagonDto {
@@ -13,11 +14,11 @@ export class ImportWagonDto {
     @ApiProperty({
         description: 'The date when the vagon was imported.',
         type: String,
-        format: 'date',
-        example: '2025-08-13',
+        format: 'date-time',
         required: false, 
     })
     @IsOptional()
     @IsDate()
+    @Type(() => Date)
     importedDate?: Date;
 }

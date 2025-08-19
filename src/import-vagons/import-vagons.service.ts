@@ -23,10 +23,14 @@ export class ImportVagonsService {
             throw new NotFoundException('Wagon not found or not in Release state')
         }
 
+        if (!existingWagon.releaseDate) {
+            throw new BadRequestException('Wagon must have a release date before importing');
+        }
         const importedDate = importWagonDto.importedDate ?? new Date();
-        if (existingWagon.releaseDate && importedDate <= existingWagon.releaseDate) {
+        if (existingWagon.releaseDate && importedDate < existingWagon.releaseDate) {
             throw new BadRequestException('Imported date must be later than release date');
         }
+
 
         if (existingWagon.takenOutDate !== null) {
             throw new ConflictException('Wagon already taken out, cannot import')
@@ -34,7 +38,7 @@ export class ImportVagonsService {
 
         Object.assign(existingWagon, {
             operation: OperationType.Import,
-            importedDate,
+            importedDate: importedDate,
         });
 
         const updatedWagon = await this.wagonRepository.save(existingWagon);

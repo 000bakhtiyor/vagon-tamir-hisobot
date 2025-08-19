@@ -1,5 +1,6 @@
 import { ReleasedVagon } from "src/released-vagons/entities/released-vagon.entity";
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { RepairClassificationGroup } from "./repair-classification-group.entity";
 
 @Entity('repair_classifications')
 export class RepairClassification {
@@ -21,4 +22,8 @@ export class RepairClassification {
 
     @OneToMany(()=> ReleasedVagon, (releasedVagon) => releasedVagon.repairClassification)
     releasedVagons: ReleasedVagon[];
+
+    @ManyToOne(() => RepairClassificationGroup, (group) => group.classifications, { nullable: true, onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'group_id' })
+    group: RepairClassificationGroup;
 }

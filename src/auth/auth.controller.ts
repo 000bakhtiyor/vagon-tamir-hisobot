@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Req, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Req, UseGuards, Get, Query, Redirect } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiProperty, ApiResponse } from '@nestjs/swagger';
@@ -6,14 +6,13 @@ import { ResponseLoginDto } from './dto/response-login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
-import { Roles } from './roles.decorator';
 import { RolesGuard } from './roles.guard';
 import { UserDecorator } from 'src/common/decorators/user.decorator';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-
+  
   @Post('login')
   @ApiOperation({ summary: 'User login and token generation' })
   @ApiBody({ type: LoginDto })

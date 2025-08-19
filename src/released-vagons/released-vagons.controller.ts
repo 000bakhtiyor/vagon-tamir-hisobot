@@ -26,6 +26,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { UserDecorator } from 'src/common/decorators/user.decorator';
 import { FindReleasedVagonsQueryDto } from './dto/find-released-vagon-query.dto';
+import { date } from 'joi';
 
 @ApiTags('Released Vagons [ALL]')
 @ApiBearerAuth()
@@ -48,25 +49,20 @@ export class ReleasedVagonsController {
   @Roles(RolesEnum.MODERATOR, RolesEnum.SUPERADMIN, RolesEnum.VIEWER)
   @ApiOperation({ summary: 'Get all released vagons [ALL]' })
   @ApiQuery({
-    name: 'page',
+    name: 'date',
     required: false,
-    description: 'Page number for pagination',
-    type: Number,
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-    description: 'Number of records per page',
-    type: Number,
+    description: 'Date for filtering records, format: YYYY-MM-DD',
+    type: String,
   })
   async findAll(
     @UserDecorator('role') role: RolesEnum, 
-    @UserDecorator('depoId') depoId: string, 
-    @Query('page') page: number, 
-    @Query('limit') limit: number,
+    @UserDecorator('depoId') depoId: string,
     @Query() query: FindReleasedVagonsQueryDto,
   ) {
     const {
+      date,
+      page,
+      limit,
       wagonNumber,
       wagonCode,
       vagonType,
@@ -81,6 +77,7 @@ export class ReleasedVagonsController {
     return this.releasedVagonsService.findAll(
       role,
       depoId,
+      date,
       page,
       limit,
       wagonNumber,

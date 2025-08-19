@@ -10,6 +10,7 @@ import { OperationType } from 'src/common/enums/operation-type.enum';
 import { RepairClassification } from 'src/repair-classifications/entities/repair-classification.entity';
 import { Station } from 'src/stations/entities/station.entity';
 import { RolesEnum } from 'src/common/enums/role.enum';
+import { exist } from 'joi';
 
 @Injectable()
 export class ReleasedVagonsService {
@@ -23,6 +24,7 @@ export class ReleasedVagonsService {
     @InjectRepository(Station)
     private readonly stationRepository: Repository<Station>
   ) {}
+  
   async create(createReleasedVagonDto: CreateReleasedVagonDto, role: RolesEnum, depoId: string): Promise<BaseResponseDto<ReleasedVagon>> {
 
     if (createReleasedVagonDto.vagonNumber < 0) {
@@ -93,8 +95,9 @@ export class ReleasedVagonsService {
   async findAll(
     role: RolesEnum,
     depoId: string,
-    page: number = 1,
-    limit: number = 10,
+    date?: string,
+    page?: number,
+    limit?: number,
     wagonCode?: string,
     wagonNumber?: string,
     vagonType?: string,
@@ -106,14 +109,18 @@ export class ReleasedVagonsService {
     importedDate?: string,
     takenOutDate?: string,
   ): Promise<BaseResponseDto<ReleasedVagon[]>> {
+    const currentPage = page ?? 1;
+    const currentLimit = limit ?? 10;
+
     const qb = this.releasedVagonsRepository.createQueryBuilder('v')
       .leftJoinAndSelect('v.station', 'station')
       .leftJoinAndSelect('station.wagonDepot', 'depot')
       .leftJoinAndSelect('v.repairClassification', 'repairClassification')
       .leftJoinAndSelect('v.ownership', 'ownership')
       .orderBy('v.releaseDate', 'DESC')
-      .skip((page - 1) * limit)
-      .take(limit);
+      
+      .skip((currentPage - 1) * currentLimit)
+      .take(currentLimit);
 
     if (role === RolesEnum.MODERATOR) {
       qb.andWhere('depot.id = :depoId', { depoId });
@@ -150,6 +157,9 @@ export class ReleasedVagonsService {
     }
     if (takenOutDate) {
       qb.andWhere('DATE(v.takenOutDate) = :takenOutDate', { takenOutDate });
+    }
+    if (date) {
+      qb.andWhere('DATE(v.releaseDate) <= :date', { date });
     }
 
     const vagons = await qb.getMany();
@@ -191,18 +201,38 @@ export class ReleasedVagonsService {
     const vagon = await this.releasedVagonsRepository.findOne({ where: { id } });
     if (!vagon) throw new NotFoundException('Vagon not found')
 
-    const existingVagon = await this.releasedVagonsRepository.existsBy({ vagonNumber: updateReleasedVagonDto.vagonNumber })
-    if(existingVagon){
-      throw new BadRequestException('Vagon number already exists')
+    if(updateReleasedVagonDto.vagonNumber !== undefined && updateReleasedVagonDto.vagonNumber !== vagon.vagonNumber) {
+      if(updateReleasedVagonDto.vagonNumber < 0) {
+        throw new ConflictException('Vagon number cannot be negative')
+      }
+      const existingVagon = await this.releasedVagonsRepository.existsBy({ vagonNumber: updateReleasedVagonDto.vagonNumber })
+      if(existingVagon){
+        throw new BadRequestException('Vagon number already exists')
+      }
     }
 
     const op = updateReleasedVagonDto.operation;
 
     if (op === OperationType.Import) {
+      if (vagon.importedDate) {
+        throw new ConflictException('Vagon already imported');
+      }
       Object.assign(vagon, { ...updateReleasedVagonDto, importedDate: updateReleasedVagonDto.importedDate ?? new Date(), });
     } else if (op === OperationType.TakeOut) {
+      if (!vagon.importedDate) {
+        throw new ConflictException('Vagon must be imported before taking out');
+      }
+      if (vagon.takenOutDate) {
+        throw new ConflictException('Vagon already taken out');
+      }
       Object.assign(vagon, { ...updateReleasedVagonDto, takenOutDate: updateReleasedVagonDto.takenOutDate ?? new Date(), });
     } else if (op === OperationType.Release) {
+      if (vagon.takenOutDate) {
+        throw new ConflictException('Vagon already taken out');
+      }
+      if (vagon.importedDate) {
+        throw new ConflictException('Vagon already imported');
+      }
       Object.assign(vagon, { ...updateReleasedVagonDto });
     }
 

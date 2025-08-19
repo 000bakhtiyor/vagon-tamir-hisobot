@@ -1,7 +1,20 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsOptional, IsString, IsNumberString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsOptional, IsString, IsNumberString, IsNumber } from 'class-validator';
 
 export class FindReleasedVagonsQueryDto {
+    @ApiPropertyOptional({ description: 'page' })
+    @IsOptional()
+    @Type(() => Number) 
+    @IsNumber()
+    page?: number;
+
+    @ApiPropertyOptional({ description: 'limit' })
+    @IsOptional()
+    @Type(() => Number) 
+    @IsNumber()
+    limit?: number;
+
     @ApiPropertyOptional({ description: 'Wagon number (can be number or string)' })
     @IsOptional()
     @IsNumberString()
@@ -21,6 +34,11 @@ export class FindReleasedVagonsQueryDto {
     @IsOptional()
     @IsString()
     releaseDate?: string;
+
+    @ApiPropertyOptional({ description: 'Date (YYYY-MM-DD)' })
+    @IsOptional()
+    @IsString()
+    date?: string;
 
     @ApiPropertyOptional({ description: 'Owner type' })
     @IsOptional()

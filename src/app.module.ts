@@ -11,6 +11,8 @@ import { OwnershipsModule } from './ownerships/ownerships.module';
 import { OutcomeModule } from './outcome/outcome.module';
 import { ImportVagonsModule } from './import-vagons/import-vagons.module';
 import { TakeOutVagonsModule } from './take-out-vagons/take-out-vagons.module';
+import { MyFileLogger } from './common/logger/custom.logger';
+import { CreateWagonsModule } from './create-wagons/create-wagons.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { TakeOutVagonsModule } from './take-out-vagons/take-out-vagons.module';
         database: config.get('DB_NAME'),
         synchronize: true,
         autoLoadEntities: true,
+        logging: true,
+        logger: new MyFileLogger()
       }),
     }),
     AuthModule,
@@ -42,6 +46,7 @@ import { TakeOutVagonsModule } from './take-out-vagons/take-out-vagons.module';
     OutcomeModule,
     ImportVagonsModule,
     TakeOutVagonsModule,
+    CreateWagonsModule,
   ],
   controllers: [],
   providers: [],
