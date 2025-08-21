@@ -12,10 +12,16 @@ import { WagonType } from 'src/common/enums/wagom-type.enum';
 export class OutcomeController {
   constructor(private readonly outcomeService: OutcomeService) {}
 
+  @Get('/DO2/broken/')
+  @ApiOperation({ summary: 'Get broken wagons statistics according to DO-2' })
+  async getBrokenWagonsStatistics(){
+    return this.outcomeService.getBrokenWagonsStatistics();
+  }
+
   @Get('current/imported/')
   @ApiOperation({ summary: 'Get current imported wagons statistics' })
   async getCurrentImportedWagons(){
-    return this.outcomeService.getCurrentImportedWagons();
+    return this.outcomeService.getCurrentImportedWagonsCount();
   }
 
   @ApiQuery({ name: 'filterType', required: false, enum: ['daily', 'monthly', 'yearly'] })
