@@ -23,7 +23,7 @@ export class WagonDepotsController {
   }
   
   @Get('/names')
-  @Roles(RolesEnum.SUPERADMIN)
+  @Roles(RolesEnum.SUPERADMIN, RolesEnum.ADD_ADMIN)
   @ApiOperation({ summary: 'Retrieve all wagon depots' })
   async findAllNames() {
     return this.wagonDepotsService.findAllNames();
@@ -42,7 +42,7 @@ export class WagonDepotsController {
     type: Number,
   })
   @Get()
-  @Roles(RolesEnum.SUPERADMIN)
+  @Roles(RolesEnum.SUPERADMIN, RolesEnum.ADD_ADMIN, RolesEnum.ADD_ADMIN)
   @ApiOperation({ summary: 'Retrieve all wagon depots' })
   findAll(@Query('page') page: number = 1, @Query('limit') limit: number = 10) {
     return this.wagonDepotsService.findAll(page, limit);

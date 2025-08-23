@@ -19,17 +19,18 @@ export class RepairClassificationsService {
 
   async createGroupWithRps(dto: CreateRepairClassificationGroupDto) {
     const group = this.groupRepo.create({ name: dto.name });
-    await this.groupRepo.save(group);
 
     if (dto.rpIds?.length > 0) {
       const rps = await this.repo.findBy({ id: In(dto.rpIds) });
+
       if (rps.length !== dto.rpIds.length) {
         throw new NotFoundException('Some RP IDs were not found');
       }
 
-      rps.forEach(rp => (rp.group = group));
-      await this.repo.save(rps);
+      group.classifications = rps;
     }
+
+    await this.groupRepo.save(group);
 
     return this.groupRepo.findOne({
       where: { id: group.id },
@@ -38,10 +39,13 @@ export class RepairClassificationsService {
   }
 
 
+
   async findAllGroups(): Promise<BaseResponseDto<RepairClassificationGroup[]>> {
-    const groups = await this.groupRepo.find({ relations: ['classifications'] });
+    const groups = await this.groupRepo.find({
+      relations: ['classifications'],
+    });
     return new BaseResponseDto(groups, 'Repair classification groups retrieved', 200);
-  } 
+  }
   
   async create(dto: CreateRepairClassificationDto): Promise<BaseResponseDto<RepairClassification>> {
     const existingClassification = await this.repo.findOneBy({

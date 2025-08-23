@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateCreateWagonDto } from './dto/create-create-wagon.dto';
+import { CreateWagonDto } from './dto/create-create-wagon.dto';
 import { UpdateCreateWagonDto } from './dto/update-create-wagon.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { WagonDepot } from 'src/wagon-depots/entities/wagon-depot.entity';
@@ -15,9 +15,9 @@ export class CreateWagonsService {
     private readonly wagonDepotRepository: Repository<WagonDepot>,
   ) { }
 
-  async create(createCreateWagonDto: CreateCreateWagonDto) {
+  async create(CreateWagonDto: CreateWagonDto) {
     const existingDepot = await this.wagonDepotRepository.findOne({
-      where: { id: createCreateWagonDto.wagonDepotId },
+      where: { id: CreateWagonDto.wagonDepotId },
     });
 
     if (!existingDepot) {
@@ -25,20 +25,54 @@ export class CreateWagonsService {
     }
 
     const createWagon = this.createWagonRepository.create({
-      ...createCreateWagonDto,
+      ...CreateWagonDto,
       wagonDepot: existingDepot,
-      createdAt: createCreateWagonDto.createdAt ?? new Date(),
+      createdAt: CreateWagonDto.createdAt ?? new Date(),
     });
 
     return this.createWagonRepository.save(createWagon);
   }
 
-  async findAll() {
-    return this.createWagonRepository.find({
-      relations: ['wagonDepot'],
-      order: { createdAt: 'DESC' },
-    });
+  async findAll(page: number = 1, limit: number = 10, wagonNumber?: string) {
+    const qb = this.createWagonRepository
+      .createQueryBuilder('wagon')
+      .leftJoinAndSelect('wagon.wagonDepot', 'wagonDepot')
+      .orderBy('wagon.createdAt', 'DESC')
+      .skip((page - 1) * limit)
+      .take(limit);
+
+    if (wagonNumber) {
+      qb.andWhere('wagon.number ILIKE :wagonNumber', {
+        wagonNumber: `%${wagonNumber}%`,
+      });
+    }
+
+    return qb.getMany();
   }
+
+  async findAllWithDepots(page: number = 1, limit: number = 10) {
+    const qb = this.wagonDepotRepository
+      .createQueryBuilder('depot')
+      .loadRelationCountAndMap('depot.createdWagonsCount', 'depot.createWagons')
+      .skip((page - 1) * limit)
+      .take(limit);
+
+    const depots = await qb.getMany();
+
+    const totalCreatedWagons = await this.wagonDepotRepository
+      .createQueryBuilder('depot')
+      .leftJoin('depot.createWagons', 'createWagons')
+      .select('COUNT(createWagons.id)', 'count')
+      .getRawOne<{ count: string }>();
+
+    return {
+      depots,
+      totalCreatedWagons: Number(totalCreatedWagons?.count ?? 0),
+    };
+  }
+
+
+
 
   async findOne(id: string) {
     const wagon = await this.createWagonRepository.findOne({
@@ -55,11 +89,29 @@ export class CreateWagonsService {
 
   async update(id: string, updateCreateWagonDto: UpdateCreateWagonDto) {
     const wagon = await this.findOne(id);
+    if (!wagon) {
+      throw new NotFoundException(`CreateWagon with ID ${id} not found`);
+    }
 
-    Object.assign(wagon, updateCreateWagonDto);
+    const { wagonDepotId, ...rest } = updateCreateWagonDto;
+    let wagonDepot: WagonDepot | null = null;
+
+    if (wagonDepotId) {
+      wagonDepot = await this.wagonDepotRepository.findOneBy({ id: wagonDepotId });
+      if (!wagonDepot) {
+        throw new NotFoundException(`Depot with ID ${wagonDepotId} not found`);
+      }
+    }
+
+    Object.assign(wagon, rest);
+
+    if (wagonDepot) {
+      wagon.wagonDepot = wagonDepot;
+    }
 
     return this.createWagonRepository.save(wagon);
   }
+
 
   async remove(id: string) {
     const wagon = await this.findOne(id);

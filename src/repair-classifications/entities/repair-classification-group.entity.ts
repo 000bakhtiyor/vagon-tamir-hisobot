@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { RepairClassification } from "./repair-classification.entity";
 
 @Entity()
@@ -10,6 +10,15 @@ export class RepairClassificationGroup {
     @Column()
     name: string;
 
-    @OneToMany(() => RepairClassification, classification => classification.group)
+    @ManyToMany(
+        () => RepairClassification,
+        (classification) => classification.groups,
+        { cascade: true }
+    )
+    @JoinTable({
+        name: 'group_classifications', // pivot table
+        joinColumn: { name: 'group_id', referencedColumnName: 'id' },
+        inverseJoinColumn: { name: 'classification_id', referencedColumnName: 'id' },
+    })
     classifications: RepairClassification[];
 }

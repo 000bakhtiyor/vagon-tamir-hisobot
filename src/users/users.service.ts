@@ -21,10 +21,12 @@ export class UsersService {
 
   async findAll(page: number, limit:number) {
     const users = await this.userRepository.find({
+      relations: ['depots'],
       skip: (page - 1) * limit,
       take: limit,
     });
-    return users;
+    const safeUsers = users.map(({ refreshToken, password, ...rest }) => rest);
+    return safeUsers;
   }
 
   async findOne(id: string){

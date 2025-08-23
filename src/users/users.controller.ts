@@ -29,7 +29,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Get('me')
-  @Roles(RolesEnum.VIEWER, RolesEnum.MODERATOR, RolesEnum.SUPERADMIN)
+  @Roles(RolesEnum.VIEWER, RolesEnum.MODERATOR, RolesEnum.SUPERADMIN, RolesEnum.ADD_ADMIN)
   @ApiOperation({ summary: 'Get current user information [All]' })
   async getCurrentUser(@UserDecorator('userId') userId: string){
     return this.usersService.findOne(userId);

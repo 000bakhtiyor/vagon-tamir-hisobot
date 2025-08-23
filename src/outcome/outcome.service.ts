@@ -219,9 +219,6 @@ export class OutcomeService {
     };
   }
 
-
-
-
   async getCurrentImportedWagonsCount() {
       const depots = await this.depotRepository
         .createQueryBuilder('depot')
@@ -427,7 +424,6 @@ export class OutcomeService {
       );
   }
 
-
   async getImportTakenOutWagonsCount(
     filterType ?: 'daily' | 'monthly' | 'yearly',
   ): Promise < BaseResponseDto < any >> {
@@ -517,8 +513,6 @@ export class OutcomeService {
     200
   );
   }
-
-
 
   async getPlannedTakenOutStat(query: { date?: string; ownerType?: VagonOwnerType; ownershipId?: string, filterType?: 'daily' | 'monthly' | 'yearly', vagonType?: WagonType }) {
     const targetDate = query.date ? new Date(query.date) : new Date();
@@ -697,7 +691,6 @@ export class OutcomeService {
     };
   }
 
-
   async getCurrentTakenOutWagons(query: {date?: string;}){
     const targetDate = query.date ? new Date(query.date) : new Date();
 
@@ -797,5 +790,4 @@ export class OutcomeService {
       totalYearlyCount,
     };
   }
-
 }
